@@ -8,13 +8,15 @@ from kivy.uix.behaviors import ButtonBehavior
 import time
 
 fullscreen = 1
-debug = 1
+debug = 2
 
 if(debug==1):
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BCM) 
     for p in range (1, 37):
-        GPIO.setup(p, GPIO.OUT)        
+        GPIO.setup(p, GPIO.OUT)
+else:
+    print(f'\033[93m[WRN] debug variable is set -> no GPIO \033[0m')        
 
 Builder.load_string('''
 ''')
@@ -22,7 +24,6 @@ Builder.load_string('''
 class GPButton(Button):
 
     def __init__(self,pin1,pin2, **kwargs):
-        print(kwargs)
         super(GPButton, self).__init__(**kwargs)
         self.pin1=pin1
         self.pin2=pin2
@@ -45,12 +46,15 @@ class GPButton(Button):
     def on_press(self):
         if(debug==1):
             GPIO.output(self.pin1, GPIO.HIGH)
+        else:
+            print(f'\033[93m[INF] gpio {self.pin1} | high\033[0m')
     
 
     def on_release(self):
         if(debug==1):
             GPIO.output(self.pin1, GPIO.LOW)
-
+        else:
+            print(f'\033[93m[INF] gpio {self.pin1} | low\033[0m')
 
 class Program(App):
 
