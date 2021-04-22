@@ -2,10 +2,8 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.carousel import Carousel
 from kivy.uix.button import Button
 from kivy.uix.behaviors import ButtonBehavior
-from kivy.uix.carousel import Carousel
 
 import time
 
@@ -58,16 +56,10 @@ class GPButton(Button):
         else:
             print(f'\033[93m[INF] gpio {self.pin1} | low\033[0m')
 
-
-class CocktailPage(GridLayout):
-    def __init__(self, **kwargs):
-        super(GridLayout, self).__init__(**kwargs)
-
 class Program(App):
 
     def build(self):
-        root = Carousel()
-        page1 = GridLayout(cols=2, rows = 3, padding = 10, spacing=10)
+        root = GridLayout(cols=2, rows = 3, padding = 10, spacing=10)
 
         btn1 = GPButton(24,11,text='Pump 2')
         btn2 = GPButton(18,23,text='Pump 1')
@@ -76,15 +68,12 @@ class Program(App):
         btn5 = GPButton(27,22,text='Pump 6')
         btn6 = GPButton(4,17,text='Pump 5')
 
-        page1.add_widget(btn2)
-        page1.add_widget(btn1)
-        page1.add_widget(btn4)
-        page1.add_widget(btn3)
-        page1.add_widget(btn6)
-        page1.add_widget(btn5)
-
-        root.add_widget(page1)
-        root.add_widget(CocktailPage())
+        root.add_widget(btn2)
+        root.add_widget(btn1)
+        root.add_widget(btn4)
+        root.add_widget(btn3)
+        root.add_widget(btn6)
+        root.add_widget(btn5)
 
         return root
 
