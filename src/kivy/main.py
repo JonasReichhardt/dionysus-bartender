@@ -82,15 +82,15 @@ class Program(App):
         page1.add_widget(btn5)
 
         page2 = AnchorLayout()
-        img = Image(source='res\\img\\coke.png')
+        img = Image(source='..\\res\\img\\coke.png')
         page2.add_widget(img)
 
         page3 = AnchorLayout()
-        img = Image(source='res\\img\\martini.png')
+        img = Image(source='..\\res\\img\\martini.png')
         page3.add_widget(img)
 
         page4 = AnchorLayout()
-        img = Image(source='res\\img\\dik.png')
+        img = Image(source='..\\res\\img\\dik.png')
         page4.add_widget(img)
         
         # add pages to carousel
