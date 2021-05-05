@@ -1,47 +1,20 @@
 from kivy.uix.screenmanager import Screen
-
 from kivymd.app import MDApp
-from kivymd.uix.button import MDRectangleFlatButton
-from kivymd.uix.gridlayout import MDGridLayout
-
+from GPButton import GPButton
 
 class MainApp(MDApp):
     def build(self):
         screen = Screen(size=(800,480))
-        layout = MDGridLayout(cols=2, rows = 3, padding = 10, spacing=10)
 
-        layout.add_widget(
-            MDRectangleFlatButton(
-                text="Pump 1"
+        screen.add_widget(
+            GPButton(
+                25,25,
+                text="Pump 1", 
+                icon="..\\res\\img\\coke.png", 
+                pos_hint={"center_x": 0.5, "center_y": 0.5},
+                user_font_size="128sp"
             )
         )
-        layout.add_widget(
-            MDRectangleFlatButton(
-                text="Pump 2"
-            )
-        )
-        layout.add_widget(
-            MDRectangleFlatButton(
-                text="Pump 3"
-            )
-        )
-        layout.add_widget(
-            MDRectangleFlatButton(
-                text="Pump 4"
-            )
-        )
-        layout.add_widget(
-            MDRectangleFlatButton(
-                text="Pump 5"
-            )
-        )
-        layout.add_widget(
-            MDRectangleFlatButton(
-                text="Pump 6"
-            )
-        )
-        screen.add_widget(layout)
         return screen
-
 
 MainApp().run()
