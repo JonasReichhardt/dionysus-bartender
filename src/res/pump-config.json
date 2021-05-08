@@ -1,0 +1,34 @@
+{
+    "pumps":[
+        {
+            "name": "pump1",
+            "pins": [37,45],
+            "ingredient": "Vodka"
+        },
+        {
+            "name": "pump2",
+            "pins": [13,35],
+            "ingredient": "Ginger ale"
+        },
+        {
+            "name": "pump3",
+            "pins": [12,3],
+            "ingredient": "Lime juice"
+        },
+        {
+            "name": "pump4",
+            "pins": [132,122],
+            "ingredient": "Tequila"
+        },
+        {
+            "name": "pump5",
+            "pins": [43,4],
+            "ingredient": "Grenadine"
+        },
+        {
+            "name": "pump6",
+            "pins": [7,5],
+            "ingredient": "Orange juice"
+        }
+    ]
+}
