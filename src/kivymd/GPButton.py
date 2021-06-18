@@ -1,8 +1,9 @@
 from kivymd.uix.button import MDIconButton
+from kivymd.uix.behaviors import MagicBehavior
 
 debug = 0
 
-class GPButton(MDIconButton):
+class GPButton(MDIconButton, MagicBehavior):
     def __init__(self,pin1,pin2,**kwargs):
         super(GPButton, self).__init__(**kwargs)
         self.pin1=pin1
@@ -24,6 +25,7 @@ class GPButton(MDIconButton):
     _pin2 = property(get_pin2, set_pin2)
 
     def on_press(self):
+        self.grow()
         if(debug==1):
             GPIO.output(self.pin1, GPIO.HIGH)
         else:
@@ -31,6 +33,7 @@ class GPButton(MDIconButton):
     
 
     def on_release(self):
+        self.shrink()
         if(debug==1):
             GPIO.output(self.pin1, GPIO.LOW)
         else:

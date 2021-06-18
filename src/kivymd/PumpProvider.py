@@ -9,14 +9,14 @@ class PumpDataProvider():
             pumps = json.load(data)["pumps"]
             data = []
             for pump in pumps:
-                name = pump["name"]
                 pins = pump["pins"]
                 ingredient = pump["ingredient"]
-                data.append(Pump(name,pins,ingredient))
+                flowrate = pump["flowrate"]
+                data.append(Pump(pins,ingredient,flowrate))
             return data
 
 class Pump():
-    def __init__(self, name, pins, ingredient):
-        self.name = name
+    def __init__(self, pins, ingredient, flowrate):
         self.ingredient = ingredient
         self.pins = pins
+        self.flowrate = flowrate

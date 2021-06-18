@@ -1,34 +1,34 @@
 {
     "pumps":[
         {
-            "name": "pump1",
+            "ingredient": "1",
             "pins": [37,45],
-            "ingredient": "Vodka"
+            "flowrate": 30
         },
         {
-            "name": "pump2",
+            "ingredient": "1",
             "pins": [13,35],
-            "ingredient": "Ginger ale"
+            "flowrate": 30
         },
         {
-            "name": "pump3",
+            "ingredient": "1",
             "pins": [12,3],
-            "ingredient": "Lime juice"
+            "flowrate": 30
         },
         {
-            "name": "pump4",
+            "ingredient": "1",
             "pins": [132,122],
-            "ingredient": "Tequila"
+            "flowrate": 30
         },
         {
-            "name": "pump5",
+            "ingredient": "1",
             "pins": [43,4],
-            "ingredient": "Grenadine"
+            "flowrate": 30
         },
         {
-            "name": "pump6",
+            "ingredient": "1",
             "pins": [7,5],
-            "ingredient": "Orange juice"
+            "flowrate": 30
         }
     ]
 }
