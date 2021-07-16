@@ -24,10 +24,6 @@ sudo apt install pkg-config libgl1-mesa-dev libgles2-mesa-dev \
 sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev -y
 echo " "
 
-echo -e "${green}Installing unclutter...${reset}"
-sudo apt-get install unclutter -y
-echo " "
-
 echo -e "${blue}${bold}${uline}[Phase 2 of 6]${reset}"
 echo -e "${green}${bold}[Setting up virtual environment]${reset}"
 echo -e "${green}Installing virtual environment...${reset}"
@@ -64,7 +60,7 @@ echo -e "${green}${bold}[Setting up miscellaneous]${reset}"
 echo -e "${green}Setting hostname...${reset}"
 sudo hostnamectl set-hostname dionysus
 echo -e "${green}Setting cursor settings...${reset}"
-echo "@unclutter -idle 0" >> ~/.config/lxsession/LXDE-pi/autostart
+sudo sed -i.bkp '/\[Seat\:\*\]/a xserver-command = X -nocursor' /etc/lightdm/lightdm.conf
 echo " "
 
 read -n 1 -s -r -p "Press any key to reboot"
