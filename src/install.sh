@@ -65,6 +65,7 @@ echo -e "${green}Setting hostname...${reset}"
 sudo hostnamectl set-hostname dionysus
 echo -e "${green}Setting cursor settings...${reset}"
 echo "@unclutter -idle 0" >> ~/.config/lxsession/LXDE-pi/autostart
+echo " "
 
 read -n 1 -s -r -p "Press any key to reboot"
 
