@@ -1,6 +1,0 @@
-#!/bin/bash
-echo "Starting virtual environment"
-source /home/pi/Desktop/appdata/bin/activate
-echo "Starting application"
-python3 main.py
-read -n 1 -s -r -p "Press any key to continue"
