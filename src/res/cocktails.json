@@ -2,50 +2,26 @@
   "cocktails": [
     {
       "name":"Moscow Mule",
-      "ingredients": [
-          {
-            "name": "Vodka",
-            "amount": 57
-          },
-          {
-            "name": "Ginger ale",
-            "amount": 227
-          },
-          {
-            "name": "Lime juice",
-            "amount": 57
-          }
-        ]
+      "ingredients": {
+        "Vodka": 57,
+        "Ginger ale": 227,
+        "Lime juice": 57
+      }
     },
     {
       "name":"Tequila Sunrise",
-      "ingredients": [
-          {
-            "name": "Tequila",
-            "amount": 28.5
-          },
-          {
-            "name": "Grenadine",
-            "amount": 14.2
-          },
-          {
-            "name": "Orange juice",
-            "amount": 114
-          }
-        ]
+      "ingredients": {
+        "Tequila": 28.5,
+        "Grenadine": 14.2,
+        "Orange juice": 114
+      }
     },
     {
       "name":"Virgin Pina Colada",
-      "ingredients": [
-          {
-            "name": "Pineapple juice",
-            "amount": 114
-          },
-          {
-            "name": "Coconut cream",
-            "amount": 114
-          }
-        ]
+      "ingredients": {
+        "Pineapple juice": 114,
+        "Coconut cream": 114
+      }
     }
   ]
 }
