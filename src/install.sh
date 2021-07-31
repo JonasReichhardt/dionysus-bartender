@@ -37,6 +37,7 @@ echo -e "${blue}${bold}${uline}[Phase 3 of 6]${reset}"
 echo -e "${green}${bold}[Installing KivyMD dependencies]${reset}"
 pip install Pillow
 pip install kivy
+pip install RPi.GPIO
 echo " "
 
 echo -e "${blue}${bold}${uline}[Phase 4 of 6]${reset}"
