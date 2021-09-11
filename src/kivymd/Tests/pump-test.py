@@ -17,11 +17,11 @@ debug = 2
 
 if(debug==1):
     import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BCM) 
+    GPIO.setmode(GPIO.BCM)
     for p in range (1, 37):
         GPIO.setup(p, GPIO.OUT)
 else:
-    print(f'\033[93m[WRN] debug variable is set -> no GPIO \033[0m')        
+    print(f'\033[93m[WRN] debug variable is set -> no GPIO \033[0m')
 
 class Program(MDApp):
 

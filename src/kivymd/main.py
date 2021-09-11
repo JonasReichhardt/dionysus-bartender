@@ -21,7 +21,7 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
 
 RES_PATH = Path("../res/")
 
-class MainApp(MDApp):
+class DionysusApp(MDApp):
     def build(self):
         self.cocktails = self.loadCocktails()
         self.pumps = self.loadPumps()
@@ -80,4 +80,4 @@ class MainApp(MDApp):
              return str(RES_PATH / "img" / "error.png")
 
 
-MainApp().run()
+DionysusApp().run()
