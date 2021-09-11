@@ -1,5 +1,6 @@
 import json
 import threading
+import time
 from Pump import *
 
 debug = 0
@@ -38,6 +39,18 @@ class Pump():
         seconds = amount / self.flowrate
         timer = threading.Timer(seconds, self.turnOff)
         self.turnOn(timer)
+
+    def activate_blocking(self,amount):
+        seconds = amount / self.flowrate
+        if(debug==1):
+            GPIO.output(self.pins[0], GPIO.HIGH)
+        else:
+            print(f'\033[93m[INF] gpio {self.pins[0]} | high\033[0m')
+        time.sleep(seconds)
+        if(debug==1):
+            GPIO.output(self.pins[0], GPIO.LOW)
+        else:
+            print(f'\033[93m[INF] gpio {self.pins[0]} | low\033[0m')
 
 class PumpFactory():
     def __init__(self,file):
