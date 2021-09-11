@@ -8,21 +8,24 @@ from kivy.clock import Clock
 from GPButton import GPButton
 from kivy.core.window import Window
 
-from Cocktail import * 
+from pathlib import Path
+
+from Cocktail import *
 from Pump import *
 
 # setup screen and gpio depending on OS
-from kivy.utils import platform
-if platform == 'linux':
+import platform
+platformInfo = platform.uname()
+if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
     Window.fullscreen = 'auto'
     import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BCM) 
+    GPIO.setmode(GPIO.BCM)
     for p in range (1, 37):
         GPIO.setup(p, GPIO.OUT)
 else:
-    print(f'\033[93m[WRN] not running on linux -> no GPIO \033[0m')    
+    print(f'\033[93m[WRN] not running on linux -> no GPIO \033[0m')
 
-RES_PATH = "..\\res\\"
+RES_PATH = Path("../res/")
 
 class MainApp(MDApp):
     def build(self):
@@ -58,7 +61,7 @@ class MainApp(MDApp):
                     GPButton(
                         cocktail,
                         self.pumps,
-                        icon=RES_PATH+"img\\coke"+str(inting)+".png", 
+                        icon= str(RES_PATH / "img" / ("coke"+str(inting)+".png")),
                         pos_hint={"center_x": 0.5, "center_y": 0.5},
                         user_font_size="128sp"
                     )
@@ -67,15 +70,15 @@ class MainApp(MDApp):
                 carousel.add_widget(grid)
 
         screen.add_widget(carousel)
-        
+
         return screen
 
     def loadCocktails(self):
-        provider = CocktailFactory(RES_PATH+"cocktails.json")
+        provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
         return provider.loadFromFile()
 
     def loadPumps(self):
-        provider = PumpFactory(RES_PATH+"pump-config.json")
+        provider = PumpFactory(str(RES_PATH / "pump-config.json"))
         return provider.loadFromFile()
 
 
