@@ -12,6 +12,8 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
     for p in range (1, 37):
         GPIO.setup(p, GPIO.OUT)
     debug = 1
+else:
+    print(f'\033[93m[WRN] not running on raspberry -> no GPIO \033[0m')
 
 class Pump():
     def __init__(self, pins, ingredient, flowrate):
@@ -31,9 +33,6 @@ class Pump():
             GPIO.output(self.pins[0], GPIO.LOW)
         else:
             print(f'\033[93m[INF] gpio {self.pins[0]} | low\033[0m')
-
-    def callback(self):
-        print("et")
 
     def activate(self, amount):
         seconds = amount / self.flowrate

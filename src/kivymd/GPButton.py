@@ -8,10 +8,10 @@ class GPButton(MDIconButton):
 
     def get_cocktail(self):
         return self.cocktail
-    
+
     def set_cocktail(self, value):
         self.cocktail = value
-    
+
     _cocktail = property(get_cocktail, set_cocktail)
 
     def on_press(self):
