@@ -12,6 +12,7 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
     GPIO.setmode(GPIO.BCM)
     for p in range (1, 37):
         GPIO.setup(p, GPIO.OUT)
+    print(f'\033[93m[INF] GPIO setup done \033[0m')
     debug = 1
 else:
     print(f'\033[93m[WRN] not running on raspberry -> no GPIO \033[0m')
