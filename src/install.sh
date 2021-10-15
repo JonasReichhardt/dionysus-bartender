@@ -56,14 +56,17 @@ sudo cp ../../config/kivy/config.ini ~/.kivy/config.ini
 sudo cp ~/.kivy/config.ini /root/.kivy/config.ini
 echo " "
 
-echo -e "${blue}${bold}${uline}[Phase 6 of 6]${reset}"
-echo -e "${green}${bold}[Setting up miscellaneous]${reset}"
-echo -e "${green}Setting hostname...${reset}"
-sudo hostnamectl set-hostname dionysus
-echo -e "${green}Setting cursor settings...${reset}"
-sudo sed -i.bkp '/\[Seat\:\*\]/a xserver-command = X -nocursor' /etc/lightdm/lightdm.conf
-echo " "
-
+echo "Set hostname and disable cursor? [Y,n]"
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+   echo -e "${blue}${bold}${uline}[Phase 6 of 6]${reset}"
+   echo -e "${green}${bold}[Setting up miscellaneous]${reset}"
+   echo -e "${green}Setting hostname...${reset}"
+   sudo hostnamectl set-hostname dionysus
+   echo -e "${green}Setting cursor settings...${reset}"
+   sudo sed -i.bkp '/\[Seat\:\*\]/a xserver-command = X -nocursor' /etc/lightdm/lightdm.conf
+   echo " "
+   
 read -n 1 -s -r -p "Press any key to reboot"
 
 sudo reboot
