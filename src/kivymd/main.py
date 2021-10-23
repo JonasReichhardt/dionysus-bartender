@@ -66,11 +66,18 @@ class DionysusApp(MDApp):
 
     def loadCocktails(self):
         provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
-        return provider.loadFromFile()
+        return provider.loadCocktails(self.loadIngredients())
 
     def loadPumps(self):
         provider = PumpFactory(str(RES_PATH / "pump-config.json"))
         return provider.loadFromFile()
+
+    def loadIngredients(self):
+        pumps = self.loadPumps()
+        ingredients = []
+        for pump in pumps:
+            ingredients.append(pump.ingredient)
+        return ingredients
 
     def getIconPath(self, name):
          path = RES_PATH / "img" / (name.lower().replace(' ','-')+".png")

@@ -14,6 +14,19 @@ class CocktailFactory():
                 data.append(Cocktail(name,ingredients))
             return data
 
+    def loadCocktails(self, ingredients):
+        cocktails = self.loadFromFile()
+        makeableCocktails = []
+
+        # only return cocktail if every ingredient is connected to a pump
+        for c in cocktails:
+            makeable = all(elem in ingredients for elem in c.ingredients)
+            if makeable:
+                makeableCocktails.append(c)
+
+        return makeableCocktails
+
+
 class Cocktail():
     def __init__(self, name, ingredients):
         self.name = name
