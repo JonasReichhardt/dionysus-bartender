@@ -11,7 +11,11 @@ class CocktailFactory():
             for cocktail in cocktails:
                 name = cocktail["name"]
                 ingredients = cocktail["ingredients"]
-                data.append(Cocktail(name,ingredients))
+                try:
+                    additional = cocktail["additional"]
+                except KeyError:
+                    additional = []
+                data.append(Cocktail(name,ingredients,additional))
             return data
 
     def loadCocktails(self, ingredients):
@@ -28,9 +32,10 @@ class CocktailFactory():
 
 
 class Cocktail():
-    def __init__(self, name, ingredients):
+    def __init__(self, name, ingredients, additional):
         self.name = name
         self.ingredients = ingredients
+        self.additional = additional
 
     def make(self, pumps):
         for key, value in self.ingredients.items():

@@ -6,7 +6,11 @@
         "Vodka": 57,
         "Ginger ale": 227,
         "Lime juice": 57
-      }
+      },
+      "additional":[
+        "Lime",
+        "Crushed ice"
+      ]
     },
     {
       "name":"Tequila Sunrise",
@@ -24,10 +28,25 @@
       }
     },
     {
-      "name":"Not Available Colada",
+      "name":"Long Island Tea",
       "ingredients": {
-        "Not Available Ingredient": 114,
-        "Coconut cream": 114
+        "Vodka": 14,
+        "Light rum": 14,
+        "Gin": 14,
+        "Tequila": 14,
+        "Cola": 10
+      },
+      "additional":[
+        "Lemon",
+        "Ice cubes"
+      ]
+    },
+    {
+      "name":"Negroni",
+      "ingredients": {
+        "Vodka": 28.5,
+        "Campari": 28.5,
+        "Sweet Vermouth": 28.5
       }
     }
   ]
