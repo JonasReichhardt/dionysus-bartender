@@ -1,7 +1,8 @@
 import json
 
+
 class CocktailFactory():
-    def __init__(self,file):
+    def __init__(self, file):
         self.file = file
 
     def loadFromFile(self):
@@ -15,7 +16,7 @@ class CocktailFactory():
                     additional = cocktail["additional"]
                 except KeyError:
                     additional = []
-                data.append(Cocktail(name,ingredients,additional))
+                data.append(Cocktail(name, ingredients, additional))
             return data
 
     def loadCocktails(self, ingredients):

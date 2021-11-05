@@ -2,8 +2,8 @@ from kivy.uix.screenmanager import *
 from kivymd.app import MDApp
 from kivy.core.window import Window
 
-from Cocktail import *
-from Pump import *
+from model.Cocktail import *
+from model.Pump import *
 from WelcomeCarousel import *
 from CocktailCarousel import *
 
