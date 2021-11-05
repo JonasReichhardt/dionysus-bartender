@@ -1,0 +1,53 @@
+<MainScreen>
+    # Add box layout
+    MDBoxLayout:
+        padding: "10dp"
+        # Add label
+        MDLabel:
+            text:'MAIN SCREEN'
+            font_style:'H6'
+            # Horizontal text alignment
+            halign: "center"
+
+<WelcomeScreen>:
+    # Add box layout
+    MDBoxLayout:
+        padding: "10dp"
+        # Add label
+        MDRectangleFlatButton:
+            text: 'Profile'
+            font_style:'H6'
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            on_press: root.manager.current = 'main'
+
+<CocktailScreen>
+    MDToolbar:
+        id: toolbar
+        title: "Choose your cocktail"
+        elevation: 10
+        pos_hint: {"top": 1}
+
+    MDSwiper:
+        id: swiper
+        size_hint_y: None
+        height: root.height - toolbar.height - dp(40)
+        y: root.height - self.height - toolbar.height - dp(20)
+
+<CocktailItem>
+    MDSwiperItem:
+        RelativeLayout:
+            FitImage:
+                source: "C:/Users/haslh/Documents/Projects/Dionysus/dionysus-bartender/src/res/img/coke4.png"
+                radius: [10,]
+
+            MDBoxLayout:
+                adaptive_height: True
+                spacing: "12dp"
+
+                MDLabel:
+                    text: "MDLabel"
+                    font_style: "H5"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    pos_hint: {"center_y": .5}
+                    opposite_colors: True

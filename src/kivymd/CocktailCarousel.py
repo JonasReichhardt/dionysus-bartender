@@ -5,6 +5,7 @@ from kivymd.uix.label import MDLabel
 from pathlib import Path
 
 from GPButton import *
+from src.kivymd.model.Cocktail import CocktailFactory
 
 RES_PATH = Path("../res/")
 
@@ -31,7 +32,7 @@ class CocktailCarousel(Carousel):
                 )
             )
             self.add_widget(grid)
-    
+
     def getIconPath(self, name):
         path = RES_PATH / "img" / (name.lower().replace(' ','-')+".png")
         if path.exists() and path.is_file():
