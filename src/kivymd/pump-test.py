@@ -1,4 +1,4 @@
-from src.kivymd.model.Pump import *
+from src.kivymd.Model.Pump import *
 from pathlib import Path
 
 config_file = RES_PATH = Path("../res/pump-config.json")

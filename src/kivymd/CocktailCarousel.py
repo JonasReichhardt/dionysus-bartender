@@ -5,7 +5,7 @@ from kivymd.uix.label import MDLabel
 from pathlib import Path
 
 from GPButton import *
-from src.kivymd.model.Cocktail import CocktailFactory
+from Model.Cocktail import CocktailFactory
 
 RES_PATH = Path("../res/")
 

@@ -8,7 +8,7 @@ from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 
-from model.Pump import *
+from Model.Pump import *
 from WelcomeCarousel import *
 from CocktailCarousel import *
 
@@ -40,7 +40,8 @@ class CocktailScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.ids.swiper.add_widget(CocktailItem)
+        self.ids.swiper.remove_widget(self.ids.swiper.children[0])
+        self.ids.swiper.add_widget(MDSwiperItem)
 
     def loadCocktails(self):
         provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
@@ -72,6 +73,7 @@ class CocktailItem(MDSwiperItem):
 
 
 class DionysusApp(MDApp):
+
     def build(self):
         self.theme_cls.colors = colors
         self.theme_cls.primary_palette = "Blue"
@@ -84,7 +86,6 @@ class DionysusApp(MDApp):
         for screen in screens:
             sm.add_widget(screen)
         sm.current = "cocktail"
-        self.root_widget = Builder.load_string(kv)
 
         return sm
 
