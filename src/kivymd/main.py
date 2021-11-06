@@ -1,7 +1,3 @@
-from kivy.clock import mainthread, Clock
-from kivy.compat import clock
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.screenmanager import *
 from kivymd.app import MDApp
 from kivy.core.window import Window
@@ -23,11 +19,13 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
 
 RES_PATH = Path("../res/")
 
+
 # main screen
 class WelcomeScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 # main screen
 class MainScreen(MDScreen):
@@ -35,13 +33,13 @@ class MainScreen(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 # class representation of swiper
 class CocktailScreen(MDScreen):
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.ids.swiper.remove_widget(self.ids.swiper.children[0])
-        self.ids.swiper.add_widget(MDSwiperItem)
+    def on_enter(self):
+        for c in self.loadCocktails():
+            self.ids.swiper.add_widget(CocktailItem())
 
     def loadCocktails(self):
         provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
@@ -58,9 +56,6 @@ class CocktailScreen(MDScreen):
         provider = PumpFactory(str(RES_PATH / "pump-config.json"))
         return provider.loadFromFile()
 
-# normal cocktail
-class CocktailItem(MDSwiperItem):
-
     def getIconPath(self):
         name = "coke4"
         path = RES_PATH / "img" / (name.lower().replace(' ', '-') + ".png")
@@ -70,6 +65,9 @@ class CocktailItem(MDSwiperItem):
             return str(RES_PATH / "img" / "error.png")
 
 
+# normal cocktail
+class CocktailItem(MDSwiperItem):
+    pass
 
 
 class DionysusApp(MDApp):
@@ -80,20 +78,21 @@ class DionysusApp(MDApp):
         self.theme_cls.primary_hue = "500"
 
         kv = Builder.load_file("View/CocktailScreen.kv")
+        kv = Builder.load_file("View/WelcomeScreen.kv")
+        kv = Builder.load_file("View/MainScreen.kv")
         sm = ScreenManager(transition=FadeTransition(duration=0.5))
         # register all pages
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "cocktail"
+        sm.current = "welcome"
 
         return sm
-
 
     # change to main view
     def change_to_main(self, instance, value):
         if value == 2:
-            sm.current = 'MainScreen'
+            sm.current = 'main'
 
 
 DionysusApp().run()
