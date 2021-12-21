@@ -20,7 +20,7 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
 RES_PATH = Path("../res/")
 
 
-# main screen
+# welcome screen
 class WelcomeScreen(MDScreen):
 
     def __init__(self, **kwargs):
@@ -39,7 +39,7 @@ class CocktailScreen(MDScreen):
 
     def on_enter(self):
         for c in self.loadCocktails():
-            self.ids.swiper.add_widget(CocktailItem())
+            self.ids.swiper.add_widget(CocktailItem(name=c.name))
 
     def loadCocktails(self):
         provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
@@ -56,18 +56,21 @@ class CocktailScreen(MDScreen):
         provider = PumpFactory(str(RES_PATH / "pump-config.json"))
         return provider.loadFromFile()
 
+
+# normal cocktail
+class CocktailItem(MDSwiperItem):
+    name = ""
+
+    def __init__(self, **kwargs):
+        self.name = kwargs["name"]
+        super().__init__()
+
     def getIconPath(self):
-        name = "coke4"
-        path = RES_PATH / "img" / (name.lower().replace(' ', '-') + ".png")
+        path = RES_PATH / "img" / (self.name.lower().replace(' ', '-') + ".png")
         if path.exists() and path.is_file():
             return str(path)
         else:
             return str(RES_PATH / "img" / "error.png")
-
-
-# normal cocktail
-class CocktailItem(MDSwiperItem):
-    pass
 
 
 class DionysusApp(MDApp):
@@ -85,7 +88,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "welcome"
+        sm.current = "cocktail"
 
         return sm
 
