@@ -1,2 +1,4 @@
 # dionysus-bartender
 A self-built automatic bartender named after the greek god of wine-making, insanity and similar things.
+
+For more information look into the [wiki](https://github.com/JonasReichhardt/dionysus-bartender/wiki)
