@@ -5,6 +5,8 @@
 #define pin5 12
 #define pin6 13
 
+#define DEBUG false
+
 unsigned long starts[6];
 long waitTimes[6];
 bool setFlags[] = {false,false,false,false,false,false};
@@ -26,12 +28,17 @@ void loop() {
 }
 
 void update_pins(){
-  unsigned long cur_millis = millis();
-
   for (int i = 0; i < 6; i = i + 1) {
-    if((cur_millis - starts[i]) >= waitTimes[i] && setFlags[i]){
-      setFlags[i] = false;
-      digitalWrite(pins[i],LOW);
+    if(setFlags[i]){
+      if(millis() - starts[i] >= waitTimes[i] ){
+        #if DEBUG
+          Serial.print(pins[i],DEC);
+          Serial.print(":");
+          Serial.println(millis() - starts[i]);
+    	  #endif
+        setFlags[i] = false;
+        digitalWrite(pins[i],LOW);
+      }
     }
   }
 }
@@ -40,25 +47,18 @@ void check_for_input(){
   if (Serial.available() > 0) {
     long data = Serial.parseInt(SKIP_NONE);
 
-    // last two digits indicate pin    
-    int pin = data % 100;
-    data = data / 100;
-
-    int index = -1;
-    for (int i = 0; i < 6; i = i + 1) {
-      if(pin == pins[i]){
-        index = i;
-      }
-    }
-
-    // pin not found -> return
-    if(index == -1){
-      return;
-    }
+    // last digit = index of pump array   
+    int index = data % 10;
+    data = data / 10;
 
     setFlags[index] = true;
     waitTimes[index] = data;
     starts[index] = millis();
     digitalWrite(pins[index],HIGH);
+    #if DEBUG
+        Serial.print(pins[index],DEC);
+        Serial.print(":");
+        Serial.println(data,DEC);
+    #endif
   }
 }
