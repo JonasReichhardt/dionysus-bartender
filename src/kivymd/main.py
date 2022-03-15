@@ -1,3 +1,4 @@
+from kivy.lang import Builder
 from kivy.uix.screenmanager import *
 from kivymd.app import MDApp
 from kivy.core.window import Window
@@ -5,7 +6,6 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 
 from Model.Pump import *
-from WelcomeCarousel import *
 from CocktailCarousel import *
 
 # setup screen depending on OS
@@ -39,7 +39,7 @@ class CocktailScreen(MDScreen):
 
     def on_enter(self):
         for c in self.loadCocktails():
-            self.ids.swiper.add_widget(CocktailItem(name=c.name))
+            self.ids.swiper.add_widget(CocktailItem(cocktail=c))
 
     def loadCocktails(self):
         provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
@@ -59,14 +59,14 @@ class CocktailScreen(MDScreen):
 
 # normal cocktail
 class CocktailItem(MDSwiperItem):
-    name = ""
+    cocktail = {}
 
     def __init__(self, **kwargs):
-        self.name = kwargs["name"]
+        self.cocktail = kwargs["cocktail"]
         super().__init__()
 
     def getIconPath(self):
-        path = RES_PATH / "img" / (self.name.lower().replace(' ', '-') + ".png")
+        path = RES_PATH / "img" / (self.cocktail.name.lower().replace(' ', '-') + ".png")
         if path.exists() and path.is_file():
             return str(path)
         else:
@@ -78,7 +78,7 @@ class DionysusApp(MDApp):
     def build(self):
         self.theme_cls.colors = colors
         self.theme_cls.primary_palette = "Blue"
-        self.theme_cls.primary_hue = "500"
+        self.theme_cls.primary_hue = "200"
 
         kv = Builder.load_file("View/CocktailScreen.kv")
         kv = Builder.load_file("View/WelcomeScreen.kv")

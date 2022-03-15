@@ -1,23 +1,17 @@
 <CocktailScreen>:
     name: "cocktail"
 
-    MDToolbar:
-        id: toolbar
-        title: "Choose your cocktail"
-        elevation: 10
-        pos_hint: {"top": 1}
-
     MDSwiper:
         id: swiper
         size_hint_y: None
-        height: root.height - toolbar.height - dp(40)
-        y: root.height - self.height - toolbar.height - dp(20)
+        height: root.height - dp(40)
+        y: root.height - self.height - dp(20)
 
 <CocktailItem>:
     RelativeLayout:
         FitImage:
             source: root.getIconPath()
-            radius: [10,]
+            radius: [20,]
 
         MDBoxLayout:
             adaptive_height: True
@@ -25,8 +19,14 @@
 
             MDLabel:
                 text: "MDLabel"
-                font_style: "H5"
-                size_hint_y: None
-                height: self.texture_size[1]
+                font_style: "H4"
+                height: dp(40)
                 pos_hint: {"center_y": .5}
-                opposite_colors: True
+                halign: "center"
+                canvas.before:
+                    Color:
+                        rgba: app.theme_cls.primary_color
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [0,0,20,20]
