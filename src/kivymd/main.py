@@ -1,17 +1,19 @@
 from pathlib import Path
 
 from kivy.lang import Builder
+from kivy.metrics import dp
 from kivy.uix.screenmanager import *
-from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
+from kivymd.app import MDApp
+from kivymd.uix.menu import MDDropdownMenu
 
 # setup screen depending on OS
 import platform
 
-from src.kivymd.model.Cocktail import CocktailFactory
-from src.kivymd.model.Pump import PumpFactory
+from src.kivymd.Model.Cocktail import CocktailFactory
+from src.kivymd.Model.Pump import PumpFactory
 from theming import colors
 
 platformInfo = platform.uname()
@@ -33,6 +35,43 @@ class MainScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        menu_items = [
+            {
+                "viewclass": "OneLineListItem",
+                "text": "frag"
+            },
+            {
+                "viewclass": "OneLineListItem",
+                "text": "nicht"
+            },
+            {
+                "viewclass": "OneLineListItem",
+                "text": "was"
+            },
+        ]
+        self.menu = MDDropdownMenu(
+            caller=self.ids.main_button,
+            items=menu_items,
+            position="center",
+            width_mult=4
+        )
+        self.menu.bind()
+
+    def getIngredients(self):
+        return [
+            {
+                "viewclass": "OneLineListItem",
+                "text": "frag"
+            },
+            {
+                "viewclass": "OneLineListItem",
+                "text": "nicht"
+            },
+            {
+                "viewclass": "OneLineListItem",
+                "text": "was"
+            },
+        ]
 
 
 # class representation of swiper
@@ -73,6 +112,9 @@ class CocktailItem(MDSwiperItem):
         else:
             return str(RES_PATH / "img" / "error.png")
 
+    def getCocktailName(self):
+        return self.cocktail.name
+
 
 class DionysusApp(MDApp):
 
@@ -89,7 +131,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "cocktail"
+        sm.current = "main"
 
         return sm
 

@@ -1,11 +1,28 @@
+# cocktail screen
+
 <CocktailScreen>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .5
+        Rectangle:
+            size: root.width, 10
+            pos: 0, root.height - 10
     name: "cocktail"
+
+    MDBanner:
+        id: banner
+        over_widget: swiper
+        vertical_pad: 10
+        on_touch_move:
+            root.manager.transition.direction = 'down'
+            root.manager.current = 'main'
+
 
     MDSwiper:
         id: swiper
         size_hint_y: None
-        height: root.height - dp(40)
-        y: root.height - self.height - dp(20)
+        height: root.height - dp(100)
+        y: root.height - self.height - dp(60)
 
 <CocktailItem>:
     RelativeLayout:
@@ -18,9 +35,9 @@
             spacing: "12dp"
 
             MDLabel:
-                text: "MDLabel"
-                font_style: "H4"
-                height: dp(40)
+                text: root.getCocktailName()
+                font_style: "H5"
+                height: dp(20)
                 pos_hint: {"center_y": .5}
                 halign: "center"
                 canvas.before:

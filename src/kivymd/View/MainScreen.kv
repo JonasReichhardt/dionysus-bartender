@@ -1,16 +1,8 @@
-# Main Screen
+# main Screen
 
 <MainScreen>:
-    # Set screen name
-    name: "main"
-    # Add box layout
-    MDBoxLayout:
-        padding: "10dp"
-        # Add label
-        MDLabel:
-            text:'MAIN SCREEN'
-            font_style:'H6'
-            # Horizontal text alignment
-            halign: "center"
-
-
+    MDRaisedButton:
+        id: main_button
+        text: "PRESS ME"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        on_release: root.menu.open()
