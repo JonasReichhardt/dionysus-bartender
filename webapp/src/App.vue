@@ -24,7 +24,7 @@ body{
 }
 h1 {
   font-size: 100%;
-  margin-top:0;
+  margin-block: 0!important;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
