@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from kivy.lang import Builder
 from kivy.uix.screenmanager import *
 from kivymd.app import MDApp
@@ -5,12 +7,11 @@ from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 
-from Model.Pump import *
-from CocktailCarousel import *
-
 # setup screen depending on OS
 import platform
 
+from src.kivymd.model.Cocktail import CocktailFactory
+from src.kivymd.model.Pump import PumpFactory
 from theming import colors
 
 platformInfo = platform.uname()

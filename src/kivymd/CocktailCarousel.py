@@ -4,9 +4,6 @@ from kivymd.uix.label import MDLabel
 
 from pathlib import Path
 
-from GPButton import *
-from Model.Cocktail import CocktailFactory
-
 RES_PATH = Path("../res/")
 
 class CocktailCarousel(Carousel):
