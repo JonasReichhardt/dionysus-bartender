@@ -16,7 +16,10 @@ export default {
 
 <style>
 html{
-  background-color: antiquewhite;
+  font-size: 80px;
+}
+h1 {
+  font-size: 100%;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
