@@ -16,19 +16,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #slider-area{
-
-  position: relative;
+  display: grid;
+  position: static;
   float: left;
-  width: 50%;
-  height: 100%;
+  width: 50vw;
+  height: 80vh;
 }
 #pictures{
-  width:50%;
+  display: grid;
+  position:static;
+  width:50vw;
+  height: 80vh;
   float:right;
-  height: 80%;
 }
 #buttons{
-
+  
 }
 a{
   color: #42b983;

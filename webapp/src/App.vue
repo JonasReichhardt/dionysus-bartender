@@ -19,6 +19,9 @@ html{
   font-size: 50px;
 
 }
+body{
+  margin:0;
+}
 h1 {
   font-size: 100%;
   margin-top:0;
