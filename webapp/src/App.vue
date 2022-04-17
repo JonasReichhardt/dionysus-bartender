@@ -1,6 +1,6 @@
 <template>
   <h1>Dionysus Bartender</h1>
-  <HelloWorld v-bind:drinks="drinks"/>
+  <HelloWorld />
 </template>
 
 <script>
