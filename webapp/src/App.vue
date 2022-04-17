@@ -1,6 +1,6 @@
 <template>
   <h1>Dionysus Bartender</h1>
-  <HelloWorld/>
+  <HelloWorld v-bind:drinks="drinks"/>
 </template>
 
 <script>
@@ -8,15 +8,34 @@ import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
+  data(){
+    return{
+      drinks:[
+        {
+          id: 0,
+          title: "Drink 0",
+          pump1val: 0,
+          pump2val: 0,
+          pump3val: 0,
+          pump4val: 0,
+          pump5val: 0,
+          pump6val: 0,
+        }
+      ],
+      pumps:[
+      ]
+    }
+  },
   components: {
     HelloWorld
-  }
+  }     
 }
 </script>
 
 <style>
 html{
   font-size: 10vh;
+  -webkit-text-size-adjust: 100%;
 }
 body{
   margin: 0;
