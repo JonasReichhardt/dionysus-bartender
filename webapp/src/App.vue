@@ -16,7 +16,7 @@ export default {
 
 <style>
 html{
-  font-size: 50px;
+  font-size: 10vh;
 }
 body{
   margin: 0;
