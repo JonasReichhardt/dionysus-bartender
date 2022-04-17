@@ -17,13 +17,14 @@ export default {
 <style>
 html{
   font-size: 50px;
-
 }
 body{
-  margin:0;
+  margin: 0;
+  background-color:aliceblue;
+
 }
 h1 {
-  font-size: 100%;
+  font-size: 1em;
   margin-block: 0!important;
 }
 #app {

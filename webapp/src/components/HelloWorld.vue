@@ -1,8 +1,15 @@
 <template>
 <div class="container">
-   <div id="slider-area" style="background-color:powderblue;">sliders</div>
-  <div id="pictures" style="background-color:red;">pictures</div>
-  <div id="buttons" style="background-color:green;">buttons</div> 
+  <div id="slider-area-container" style="background-color:powderblue;">
+    <div>Pumpe 1</div>
+    <div>Pumpe 2</div>
+    <div>Pumpe 3</div>
+    <div>Pumpe 4</div>
+    <div>Pumpe 5</div>
+    <div>Pumpe 6</div>
+  </div>
+  <div id="pictures-container" style="background-color:red;">pictures</div>
+  <div id="buttons-container" style="background-color:green;">buttons</div> 
 </div>
 </template>
 
@@ -23,35 +30,33 @@ export default {
     height: 100vh;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 80% 1fr;
+    grid-template-areas: 
+    "slider pictures"
+    "slider pictures"
+    "buttons buttons";
     gap: 5px;
     padding: 5px;
     box-sizing: border-box;
 }
+
 .container div{
-  padding: 10px;
-  border: 1px solid black;
+  font-size: 0.8em;
 }
-#slider-area{
-  display: grid;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
+
+#slider-area-container{
+  display:flex;
+  flex-direction: column;
+  grid-area: slider;
+  width: 100%;
+  justify-content: space-between;
 }
-#pictures{
-  display: grid;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
+#pictures-container{
+
+  grid-area: pictures;
   
 }
-#buttons{
-
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
+#buttons-container{
+  grid-area: buttons;
 }
 a{
   color: #42b983;
