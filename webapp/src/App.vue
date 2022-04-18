@@ -10,20 +10,6 @@ export default {
   name: 'App',
   data(){
     return{
-      drinks:[
-        {
-          id: 0,
-          title: "Drink 0",
-          pump1val: 0,
-          pump2val: 0,
-          pump3val: 0,
-          pump4val: 0,
-          pump5val: 0,
-          pump6val: 0,
-        }
-      ],
-      pumps:[
-      ]
     }
   },
   components: {
@@ -34,7 +20,7 @@ export default {
 
 <style>
 html{
-  font-size: 10vh;
+  font-size: 5vh;
   -webkit-text-size-adjust: 100%;
 }
 body{
