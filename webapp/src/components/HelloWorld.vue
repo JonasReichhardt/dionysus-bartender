@@ -32,11 +32,10 @@ export default {
     height: 100vh;
     grid-auto-columns: minmax(0, 1fr);
     grid-template-columns: 50% 50%;
-    grid-template-rows: 40% 40% 1fr;
+    grid-template-rows: 85% 1fr;
     grid-template-areas: 
     "slider pictures"
-    "slider pictures"
-    "buttons buttons";
+    "slider buttons";
     gap: 5px;
     padding: 5px;
     box-sizing: border-box;
