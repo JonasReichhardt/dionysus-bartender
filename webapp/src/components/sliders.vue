@@ -2,38 +2,38 @@
     <div id="slider-area-container">
     <div id="pump1">Pumpe 1
       <span class="pump1-slider-area">
-        <input type="range" min="0" max="100"  class="" id="slider-pump1" v-model.lazy="pumpvals[0]" @change="normalizeVals(0)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump1" v-model.lazy="pumpvals[0]" @change="normalizeVals(0)">
+        <input type="range" min="0" max="100"  class="" id="slider-pump1" v-model.number="pumpvals[0]" @change="normalizeVals(0)">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump1" v-model.number="pumpvals[0]" @change="normalizeVals(0)">
       </span>
     </div>
     <div id="pump2">Pumpe 2
       <span class="pump2-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump2" v-model.lazy="pumpvals[1]" @change="normalizeVals(1)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump2" v-model.lazy="pumpvals[1]" @change="normalizeVals(1)">
+        <input type="range" min="0" max="100" class="" id="slider-pump2" v-model.number="pumpvals[1]" @change="normalizeVals(1)">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump2" v-model.number="pumpvals[1]" @change="normalizeVals(1)">
       </span>
     </div>
     <div id="pump3">Pumpe 3
       <span class="pump3-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump3" v-model.lazy="pumpvals[2]" @change="normalizeVals(2)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump3" v-model.lazy="pumpvals[2]" @change="normalizeVals(2)">
+        <input type="range" min="0" max="100" class="" id="slider-pump3" v-model.number="pumpvals[2]" @change="normalizeVals(2)">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump3" v-model.number="pumpvals[2]" @change="normalizeVals(2)">
       </span>
     </div>
     <div id="pump4">Pumpe 4
       <span class="pump4-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump4" v-model.lazy="pumpvals[3]" @change="normalizeVals(3)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump4" v-model.lazy="pumpvals[3]" @change="normalizeVals(3)">
+        <input type="range" min="0" max="100" class="" id="slider-pump4" v-model.number="pumpvals[3]" @change="normalizeVals(3)">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump4" v-model.number="pumpvals[3]" @change="normalizeVals(3)">
       </span>
     </div>
     <div id="pump5">Pumpe 5
       <span class="pump5-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump5" v-model.lazy="pumpvals[4]" @change="normalizeVals(4)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump5" v-model.lazy="pumpvals[4]" @change="normalizeVals(4)">
+        <input type="range" min="0" max="100" class="" id="slider-pump5" v-model.number="pumpvals[4]" @change="normalizeVals(4)">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump5" v-model.number="pumpvals[4]" @change="normalizeVals(4)">
       </span>
     </div>
     <div id="pump6">Pumpe 6
       <span class="pump6-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump6" v-model.lazy="pumpvals[5]" @change="normalizeVals(5)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump6" v-model.lazy="pumpvals[5]" @change="normalizeVals(5)">
+        <input type="range" min="0" max="100" class="" id="slider-pump6" v-model.number="pumpvals[5]" @change="normalizeVals(5)">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump6" v-model.number="pumpvals[5]" @change="normalizeVals(5)">
       </span>
     </div>
   </div>
