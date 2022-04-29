@@ -21,7 +21,7 @@ export default {
 <style>
 html{
   font-size: 5vh;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust:auto;
 }
 body{
   margin: 0;
