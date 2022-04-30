@@ -2,38 +2,38 @@
     <div id="slider-area-container">
     <div id="pump1">Pumpe 1
       <span class="pump1-slider-area">
-        <input type="range" min="0" max="100"  class="" id="slider-pump1" v-model.number="pumpvals[0]" @change="normalizeVals(0)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump1" v-model.number="pumpvals[0]" @change="normalizeVals(0)">
+        <input type="range" min="0" max="100"  class="" id="slider-pump1" v-model.number="pumpvals[0]" @change="normalizeVals(0); roundVals()">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump1" v-model.number="roundedPumpVals[0]" @change="normalizeVals(0); roundVals()">
       </span>
     </div>
     <div id="pump2">Pumpe 2
       <span class="pump2-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump2" v-model.number="pumpvals[1]" @change="normalizeVals(1)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump2" v-model.number="pumpvals[1]" @change="normalizeVals(1)">
+        <input type="range" min="0" max="100" class="" id="slider-pump2" v-model.number="pumpvals[1]" @change="normalizeVals(1); roundVals()">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump2" v-model.number="roundedPumpVals[1]" @change="normalizeVals(1); roundVals()">
       </span>
     </div>
     <div id="pump3">Pumpe 3
       <span class="pump3-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump3" v-model.number="pumpvals[2]" @change="normalizeVals(2)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump3" v-model.number="pumpvals[2]" @change="normalizeVals(2)">
+        <input type="range" min="0" max="100" class="" id="slider-pump3" v-model.number="pumpvals[2]" @change="normalizeVals(2); roundVals()">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump3" v-model.number="roundedPumpVals[2]" @change="normalizeVals(2); roundVals()">
       </span>
     </div>
     <div id="pump4">Pumpe 4
       <span class="pump4-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump4" v-model.number="pumpvals[3]" @change="normalizeVals(3)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump4" v-model.number="pumpvals[3]" @change="normalizeVals(3)">
+        <input type="range" min="0" max="100" class="" id="slider-pump4" v-model.number="pumpvals[3]" @change="normalizeVals(3); roundVals()">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump4" v-model.number="roundedPumpVals[3]" @change="normalizeVals(3); roundVals()">
       </span>
     </div>
     <div id="pump5">Pumpe 5
       <span class="pump5-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump5" v-model.number="pumpvals[4]" @change="normalizeVals(4)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump5" v-model.number="pumpvals[4]" @change="normalizeVals(4)">
+        <input type="range" min="0" max="100" class="" id="slider-pump5" v-model.number="pumpvals[4]" @change="normalizeVals(4); roundVals()">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump5" v-model.number="roundedPumpVals[4]" @change="normalizeVals(4); roundVals()">
       </span>
     </div>
     <div id="pump6">Pumpe 6
       <span class="pump6-slider-area">
-        <input type="range" min="0" max="100" class="" id="slider-pump6" v-model.number="pumpvals[5]" @change="normalizeVals(5)">
-				<input  type="number" min="0" max="100" class="input-slider" id="input-pump6" v-model.number="pumpvals[5]" @change="normalizeVals(5)">
+        <input type="range" min="0" max="100" class="" id="slider-pump6" v-model.number="pumpvals[5]" @change="normalizeVals(5); roundVals()">
+				<input  type="number" min="0" max="100" class="input-slider" id="input-pump6" v-model.number="roundedPumpVals[5]" @change="normalizeVals(5); roundVals()">
       </span>
     </div>
   </div>
@@ -46,6 +46,7 @@ export default{
       return{
         pumpvals: [20,20,15,15,15,15],
         pumpvalscopy: [20, 20, 15, 15, 15, 15],
+        roundedPumpVals:[20,20,15,15,15,15],
         enablepump: [true, true, true, true, true, true],
         counter: 0 //used for remainder handling in pumpvals
       }
@@ -57,7 +58,7 @@ export default{
           let currPump = index;
           let nActivePumps = 0;
 
-          if(this.pumpvals[index] > 0){this.enablepump[index] = true} 
+          if(this.pumpvals[index] > 1){this.enablepump[index] = true} 
 
           for(let i in this.enablepump){ //compute num of active pumps
             if(this.enablepump[i]){
@@ -109,6 +110,11 @@ export default{
           console.log("absDiff: " + absDiff + "\ncurrPump: " + currPump +  "\nnActivePumps: " + nActivePumps + "\nDiffPerPump: " + DiffPerPump + "\nsum: " + sum + "\nnewSum: " + newSum);
           console.log("After the function: " + this.pumpvalscopy[0] + " " + this.pumpvalscopy[1] + " " + this.pumpvalscopy[2] + " " + this.pumpvalscopy[3] + " " + this.pumpvalscopy[4] + " " + this.pumpvalscopy[5]);
           console.log(" ");
+        },
+        roundVals: function(){
+          for (let i = 0; i < this.pumpvals.length; i++){
+            this.roundedPumpVals[i] = this.pumpvals[i].toFixed(0)
+          }
         }
     }
   
@@ -130,6 +136,10 @@ export default{
   gap: 0.3em;
   flex: 1 1 auto;
   flex-wrap: wrap;
+  
+}
+input[type = "number"]{
+  width:2.5em
 }
 
 </style>
