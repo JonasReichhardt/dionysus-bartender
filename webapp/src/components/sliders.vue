@@ -57,6 +57,8 @@ export default{
           let currPump = index;
           let nActivePumps = 0;
 
+          if(this.pumpvals[index] > 0){this.enablepump[index] = true} 
+
           for(let i in this.enablepump){ //compute num of active pumps
             if(this.enablepump[i]){
               nActivePumps++;
@@ -67,21 +69,46 @@ export default{
           for(var i = 0; i < this.pumpvals.length; i++){
             if(this.enablepump[i] && i != index){
               let x = this.pumpvals[i] + Math.round(DiffPerPump);
+              if(x<= 0){ this.enablepump[i] = false}
               this.pumpvals[i] = x < 0 ? 0:x;
             }
           }
 
-          for (let i = 0; i < this.pumpvals.length; i++){ //update pumpvalscopy
-            this.pumpvalscopy[i] = this.pumpvals[i]
+          nActivePumps = 0;
+          for(let i in this.enablepump){ //compute num of the current active pumps
+            if(this.enablepump[i]){
+              nActivePumps++;
             }
-          var sum = 0;
+          }
+
+          let sum = 0;
           for(let i = 0; i < this.pumpvals.length; i++){
             sum += this.pumpvals[i]*1;
           }
-          
 
-          console.log("absDiff: " + absDiff + "\ncurrPump: " + currPump +  "\nnActivePumps: " + nActivePumps + "\nDiffPerPump: " + DiffPerPump + "\nsum: " + sum);
+          let sumDiff = sum - 100; // check if the new sum is bigger than 100
+          let newDiffPer = sumDiff/nActivePumps;
+
+          for(let i in this.enablepump){
+            if(this.enablepump[i]){
+              this.pumpvals[i] -= newDiffPer;
+            }
+          }
+
+          let newSum = 0;
+          for(let i = 0; i < this.pumpvals.length; i++){
+            newSum += this.pumpvals[i]*1;
+          }
+        
+
+          for (let i = 0; i < this.pumpvals.length; i++){ //update pumpvalscopy
+            this.pumpvalscopy[i] = this.pumpvals[i]
+          }
+          
+          console.log(this.enablepump[0] + " " + this.enablepump[1] + " " + this.enablepump[2] + " " + this.enablepump[3] + " " + this.enablepump[4] + " " + this.enablepump[5])
+          console.log("absDiff: " + absDiff + "\ncurrPump: " + currPump +  "\nnActivePumps: " + nActivePumps + "\nDiffPerPump: " + DiffPerPump + "\nsum: " + sum + "\nnewSum: " + newSum);
           console.log("After the function: " + this.pumpvalscopy[0] + " " + this.pumpvalscopy[1] + " " + this.pumpvalscopy[2] + " " + this.pumpvalscopy[3] + " " + this.pumpvalscopy[4] + " " + this.pumpvalscopy[5]);
+          console.log(" ");
         }
     }
   
