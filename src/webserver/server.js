@@ -8,23 +8,36 @@ main()
 async function main() {
     var serial = await open_serial_port()
     var settings = load_app_settings()
-    var cocktails = load_cocktails()
     var pumps = load_ingredients()
+    var cocktails = load_cocktails(pumps)
+    
+    if(cocktails == undefined || pumps == undefined){
+        console.error("ERR| could not load config")
+    }
 
     var app = express()
     app.use(express.json())
 
-    app.post('/cocktails', (req, res) => {
-        // check if cocktails exists
-        index = req.body.cocktail - 1
-        if (index < 0 || index > cocktails.length) {
+    app.post('/cocktails/:cocktailId', (req, res) => {
+        index = req.params.cocktailId - 1
+        if(index < 0){
+            sendCommand("x")
+            res.status(200).send('cocktail cancelled')
+            return
+        }
+
+        if (index > cocktails.length) {
             res.status(404).send('no cocktail with given id')
             return
         }
 
-        makeCocktail(index, cocktails, pumps, serial)
+        if(makeCocktail(index, cocktails, pumps, serial)){
+            res.status(200).send('preparing cocktail '+cocktails[index].name)
+        }else{
+            res.status(409).send('not all ingredients are available')
+        }
 
-        res.status(200).send('preparing cocktail')
+        
     })
 
     app.get('/cocktails', (req, res) => {
@@ -65,14 +78,34 @@ function load_app_settings() {
     }
 }
 
-function load_cocktails() {
+function load_cocktails(pumps) {
     try {
-        return JSON.parse(fs.readFileSync('..\\res\\cocktails.json', 'utf8')).cocktails
+        let sanitized = []
+        ingredients = []
+
+        pumps.forEach(p => {
+            ingredients.push(p.ingredient)    
+        });
+
+        let cocktails = JSON.parse(fs.readFileSync('..\\res\\cocktails.json', 'utf8')).cocktails
+
+        for (let i = 0; i < cocktails.length; i++) {
+            let cocktailIng = []
+            cocktails[i].ingredients.forEach(p => {
+                cocktailIng.push(p.name)    
+            });
+            if(cocktailIng.every(r => ingredients.includes(r))){
+                sanitized.push(cocktails[i])
+            }
+        }
+        return sanitized
     } catch (err) {
         console.error("ERR| could not load cocktail config")
         console.error(err)
     }
 }
+
+
 
 function load_ingredients() {
     try {
@@ -97,15 +130,27 @@ function makeCocktail(index, cocktails, pumps, serial) {
         }
     }
 
+    if(command.filter(x=>x!=0).length < cocktail.ingredients.length){
+        console.error("ERR| not all ingredients are available. No command sent")
+        return false
+    }
+
     sendCommand(command, serial)
+    return true
 }
 
 function sendCommand(command, serial) {
-    if (command.length > 6) {
-        console.error("ERR| command too large")
-        return
+    msg = ""
+    if(typeof command != "string"){
+        if (command.length > 6) {
+            console.error("ERR| command too large")
+            return
+        }
+        msg = command.join('|').concat('|')
+    }else{
+        msg = command
     }
-    msg = command.join('|').concat('|')
+
     console.info("INF| writing command <%s>", msg)
 
     // only send if serial is enabled
@@ -118,4 +163,8 @@ function sendCommand(command, serial) {
             }
         )
     }
+}
+
+function buildEndpoints(app){
+    
 }
