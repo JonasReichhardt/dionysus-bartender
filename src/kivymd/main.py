@@ -3,6 +3,8 @@ from pathlib import Path
 from kivy.lang import Builder
 from kivy.uix.screenmanager import *
 from kivy.core.window import Window
+from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 from kivymd.app import MDApp
@@ -50,7 +52,7 @@ class MainScreen(MDScreen):
                 "viewclass": "OneLineListItem",
                 "text": f"Item {i}",
                 "on_release": lambda x=f"Item {i}": self.menu_callback(x),
-             } for i in range(8)
+            } for i in range(8)
         ]
 
     def menu_callback(self, text_item):
@@ -102,6 +104,9 @@ class CocktailItem(MDSwiperItem):
         return self.cocktail.name
 
 
+
+
+
 class DionysusApp(MDApp):
 
     def build(self):
@@ -117,7 +122,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "main"
+        sm.current = "cocktail"
 
         return sm
 

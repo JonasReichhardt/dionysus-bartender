@@ -35,13 +35,13 @@
             source: root.getIconPath()
 
         MDBoxLayout:
-            adaptive_height: True
+            adaptive_height: False
 
-            MDLabel:
+            MDRaisedButton:
                 text: root.getCocktailName()
                 font_style: "H5"
-                height: dp(20)
-                pos_hint: {"center_y": .5}
+                width: root.width
+                height: root.width/6
                 halign: "center"
                 canvas.before:
                     Color:
