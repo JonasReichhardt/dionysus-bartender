@@ -1,11 +1,8 @@
 from pathlib import Path
 
 from kivy.lang import Builder
-from kivy.metrics import dp
 from kivy.uix.screenmanager import *
 from kivy.core.window import Window
-from kivymd.uix.behaviors import RoundedRectangularElevationBehavior
-from kivymd.uix.card import MDCard
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 from kivymd.app import MDApp
@@ -14,8 +11,8 @@ from kivymd.uix.menu import MDDropdownMenu
 # setup screen depending on OS
 import platform
 
-from src.kivymd.Model.Cocktail import CocktailFactory
-from src.kivymd.Model.Pump import PumpFactory
+from src.kivymd.model.Cocktail import CocktailFactory
+from src.kivymd.model.Pump import PumpFactory
 from theming import colors
 
 platformInfo = platform.uname()
@@ -37,25 +34,13 @@ class MainScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        menu_items = [
-            {
-                "viewclass": "OneLineListItem",
-                "text": "frag"
-            },
-            {
-                "viewclass": "OneLineListItem",
-                "text": "nicht"
-            },
-            {
-                "viewclass": "OneLineListItem",
-                "text": "was"
-            },
-        ]
+        menu_items = self.getIngredients()
         self.menu = MDDropdownMenu(
-            caller=self.ids.main_button,
+            caller=self.ids.buttonLayout,
             items=menu_items,
             position="center",
-            width_mult=4
+            width_mult=4,
+            height=70
         )
         self.menu.bind()
 
@@ -63,17 +48,16 @@ class MainScreen(MDScreen):
         return [
             {
                 "viewclass": "OneLineListItem",
-                "text": "frag"
-            },
-            {
-                "viewclass": "OneLineListItem",
-                "text": "nicht"
-            },
-            {
-                "viewclass": "OneLineListItem",
-                "text": "was"
-            },
+                "text": f"Item {i}",
+                "on_release": lambda x=f"Item {i}": self.menu_callback(x),
+             } for i in range(8)
         ]
+
+    def menu_callback(self, text_item):
+        self.menu.dismiss()
+
+    def getIngredient(self):
+        return "Vodi"
 
 
 # class representation of swiper
@@ -133,7 +117,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "cocktail"
+        sm.current = "main"
 
         return sm
 

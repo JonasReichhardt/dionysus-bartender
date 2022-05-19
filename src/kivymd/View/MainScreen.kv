@@ -1,8 +1,78 @@
 # main Screen
 
 <MainScreen>:
-    MDRaisedButton:
-        id: main_button
-        text: "PRESS ME"
-        pos_hint: {"center_x": .5, "center_y": .5}
-        on_release: root.menu.open()
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .5
+        Rectangle:
+            size: root.width, 10
+            pos: 0, 0
+
+    MDBanner:
+        id: banner
+        over_widget: buttonLayout
+        vertical_pad: 10
+        on_touch_move:
+            root.manager.transition.direction = 'up'
+            root.manager.current = 'cocktail'
+
+    MDGridLayout:
+        id: buttonLayout
+        cols: 2
+        col_default_width: self.width/2
+        row_default_height: self.height/3
+        padding: 0, -10
+        spacing: 12,0
+
+        MDRaisedButton:
+            id: btn1
+            text: root.getIngredient()
+            on_release: root.menu.open()
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
+
+        MDRaisedButton:
+            id: btn2
+            text: "PRESS ME"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.menu.open()
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
+
+        MDRaisedButton:
+            id: btn3
+            text: "PRESS ME"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.menu.open()
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
+
+        MDRaisedButton:
+            id: btn4
+            text: "PRESS ME"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.menu.open()
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
+
+        MDRaisedButton:
+            id: btn5
+            text: "PRESS ME"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.menu.open()
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
+
+        MDRaisedButton:
+            id: btn6
+            text: "PRESS ME"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.menu.open()
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
