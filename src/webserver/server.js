@@ -8,7 +8,8 @@ main()
 async function main() {
     var serial = await open_serial_port()
     var settings = load_app_settings()
-    var pumps = load_ingredients()
+    var pumps = load_pumps()
+    var ingredients = extract_ingredients(pumps)
     var cocktails = load_cocktails(pumps)
     
     if(cocktails == undefined || pumps == undefined){
@@ -18,15 +19,23 @@ async function main() {
     var app = express()
     app.use(express.json())
 
-    app.post('/cocktails/:cocktailId', (req, res) => {
-        index = req.params.cocktailId - 1
-        if(index < 0){
+    app.post('/cocktails/:cocktailName', (req, res) => {
+        cocktailName = req.params.cocktailName
+        if(cocktailName == "cancel"){
             sendCommand("x")
             res.status(200).send('cocktail cancelled')
             return
         }
 
-        if (index > cocktails.length) {
+        index = -1
+        for (let i = 0; i < cocktails.length; i++) {
+            if(cocktails[i].name.replace(/\s+/g, '').toLowerCase() == cocktailName){
+                index = i
+                break
+            }
+        }
+
+        if (index == -1) {
             res.status(404).send('no cocktail with given id')
             return
         }
@@ -40,12 +49,53 @@ async function main() {
         
     })
 
+    app.post('/cocktail', (req, res) => {
+        cocktail = req.body
+        
+        // check necessary parameter
+        if(cocktail.name == undefined){
+            res.status(400).send("name list required")
+            return
+        }
+        if(cocktail.ingredients == undefined){
+            res.status(400).send("ingredient list required")
+            return
+        }
+        
+        if(!check_ingredients(cocktail,ingredients)){
+            res.status(400).send("not all ingredients are available")
+            return
+        }
+
+        exists = false
+        for (let i = 0; i < cocktails.length; i++) {
+            if(cocktails[i].name == cocktail.name){
+                cocktails[i] = cocktail
+                exists = true
+            }
+        }
+        if(!exists){
+            cocktails.push(cocktail)
+        }
+
+        res.status(201).send(cocktail)
+    })
+
+    app.post('/ingredients', (req, res) => {
+        ingList = req.body
+
+        ingredients = ingList
+        cocktails = sanitize_cocktails(cocktails, ingredients)
+        
+        res.status(201).send(cocktails.length +" cocktails can be made")
+    })
+
     app.get('/cocktails', (req, res) => {
         res.status(200).send(cocktails)
     })
 
-    app.get('/pumps', (req, res) => {
-        res.status(200).send(pumps)
+    app.get('/ingredients', (req, res) => {
+        res.status(200).send(ingredients)
     })
 
     var server = app.listen(settings.port, function () {
@@ -80,7 +130,6 @@ function load_app_settings() {
 
 function load_cocktails(pumps) {
     try {
-        let sanitized = []
         ingredients = []
 
         pumps.forEach(p => {
@@ -88,26 +137,40 @@ function load_cocktails(pumps) {
         });
 
         let cocktails = JSON.parse(fs.readFileSync('..\\res\\cocktails.json', 'utf8')).cocktails
+        
+        return sanitize_cocktails(cocktails,ingredients)
 
-        for (let i = 0; i < cocktails.length; i++) {
-            let cocktailIng = []
-            cocktails[i].ingredients.forEach(p => {
-                cocktailIng.push(p.name)    
-            });
-            if(cocktailIng.every(r => ingredients.includes(r))){
-                sanitized.push(cocktails[i])
-            }
-        }
-        return sanitized
     } catch (err) {
         console.error("ERR| could not load cocktail config")
         console.error(err)
     }
 }
 
+// removes cocktails which cannot be made with current ingredients
+function sanitize_cocktails(cocktails, ingredients){
+    let sanitized = []
+    for (let i = 0; i < cocktails.length; i++) {
+        if(check_ingredients(cocktails[i], ingredients)){
+            sanitized.push(cocktails[i])
+        }
+    }
+    return sanitized
+}
+
+// checks if all ingredients of a cocktail are in the specified ingredient list
+function check_ingredients(cocktail, ingredients){
+    let cocktailIng = []
+    cocktail.ingredients.forEach(p => {
+        cocktailIng.push(p.name)    
+    });
+    if(cocktailIng.every(r => ingredients.includes(r))){
+        return true
+    }
+}
 
 
-function load_ingredients() {
+
+function load_pumps() {
     try {
         return JSON.parse(fs.readFileSync('..\\res\\pump-config.json', 'utf8')).pumps
     } catch (err) {
@@ -165,6 +228,12 @@ function sendCommand(command, serial) {
     }
 }
 
-function buildEndpoints(app){
-    
+function extract_ingredients(pumps){
+    ingredients = []
+
+    pumps.forEach(p => {
+        ingredients.push(p.ingredient)    
+    });
+
+    return ingredients
 }
