@@ -4,6 +4,8 @@ from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.uix.screenmanager import *
 from kivy.core.window import Window
+from kivymd.uix.behaviors import RoundedRectangularElevationBehavior
+from kivymd.uix.card import MDCard
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 from kivymd.app import MDApp
@@ -131,7 +133,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "main"
+        sm.current = "cocktail"
 
         return sm
 

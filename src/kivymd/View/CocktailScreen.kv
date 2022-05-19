@@ -7,6 +7,11 @@
         Rectangle:
             size: root.width, 10
             pos: 0, root.height - 10
+        Color:
+            rgba: 0, 0, 0, .1
+        Rectangle:
+            size: self.size
+            pos: self.pos
     name: "cocktail"
 
     MDBanner:
@@ -21,18 +26,16 @@
     MDSwiper:
         id: swiper
         size_hint_y: None
-        height: root.height - dp(100)
-        y: root.height - self.height - dp(60)
+        height: root.height - dp(50)
+        y: root.height - self.height - dp(30)
 
 <CocktailItem>:
     RelativeLayout:
         FitImage:
             source: root.getIconPath()
-            radius: [20,]
 
         MDBoxLayout:
             adaptive_height: True
-            spacing: "12dp"
 
             MDLabel:
                 text: root.getCocktailName()
@@ -46,4 +49,4 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [0,0,20,20]
+                        radius: [0,0,0,0]
