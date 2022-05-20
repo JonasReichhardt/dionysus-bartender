@@ -38,8 +38,13 @@
       </span>
     </div>
   </div>
-  <div class="pictures">pictures</div>
-  <div class="buttons">buttons</div>
+  <div class="pictures">
+    pictures
+  </div>
+  <div class="buttons">
+    buttons <br>
+    <input type="button">
+    </div>
 </div>
 </template>
 
