@@ -1,0 +1,17 @@
+{
+  "name": "dionysus-webserver",
+  "version": "1.0.0",
+  "description": "Webserver for the dionysus bartender",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "JonasReichhardt",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "fs": "0.0.1-security",
+    "ip": "^1.1.5",
+    "serialport": "^10.4.0"
+  }
+}
