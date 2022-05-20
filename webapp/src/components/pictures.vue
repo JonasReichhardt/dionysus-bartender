@@ -4,7 +4,10 @@
 
 <script>
 export default{
-    name: 'pictures_area'
+    name: 'pictures_area',
+    methods:{
+      
+    }
 }
 </script>
 
