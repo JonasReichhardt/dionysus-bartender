@@ -17,10 +17,8 @@ export default {
     sliders_area,
     pictures_area,
     buttons_area
-  },
-  props:[
-    
-  ]
+  }
+  
 }
 </script>
 
