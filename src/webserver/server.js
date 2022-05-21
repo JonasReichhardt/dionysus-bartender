@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const fs = require("fs")
 const { SerialPort } = require('serialport')
 var serialEnabled = true
@@ -18,6 +19,7 @@ async function main() {
 
     var app = express()
     app.use(express.json())
+    app.use(cors())
 
     app.post('/cocktails/:cocktailName', (req, res) => {
         cocktailName = req.params.cocktailName
@@ -136,7 +138,7 @@ function load_cocktails(pumps) {
             ingredients.push(p.ingredient)    
         });
 
-        let cocktails = JSON.parse(fs.readFileSync('..\\res\\cocktails.json', 'utf8')).cocktails
+        let cocktails = JSON.parse(fs.readFileSync('../res/cocktails.json', 'utf8')).cocktails
         
         return sanitize_cocktails(cocktails,ingredients)
 
@@ -172,7 +174,7 @@ function check_ingredients(cocktail, ingredients){
 
 function load_pumps() {
     try {
-        return JSON.parse(fs.readFileSync('..\\res\\pump-config.json', 'utf8')).pumps
+        return JSON.parse(fs.readFileSync('../res/pump-config.json', 'utf8')).pumps
     } catch (err) {
         console.error("ERR| could not load pump config")
         console.error(err)

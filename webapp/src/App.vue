@@ -1,10 +1,10 @@
 <template>
   <h1>Dionysus Bartender</h1>
-  <HelloWorld />
+  <DionysusApp />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DionysusApp from './components/DionysusApp.vue'
 
 export default {
   name: 'App',
@@ -13,7 +13,7 @@ export default {
     }
   },
   components: {
-    HelloWorld
+    DionysusApp
   }     
 }
 </script>
