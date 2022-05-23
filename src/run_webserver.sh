@@ -19,6 +19,10 @@ echo -e "${green}Installing nodejs/npm...${reset}"
 sudo apt install npm nodejs
 echo " "
 
+echo -e "${green}Pulling latest changes...${reset}"
+git pull
+echo " "
+
 echo -e "${blue}${bold}${uline}[Phase 2 of 4]${reset}"
 echo -e "${green}${bold}[Building frontend application]${reset}"
 echo -e "${green}Installing dependencies...${reset}"
