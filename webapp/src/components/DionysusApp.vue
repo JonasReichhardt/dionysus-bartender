@@ -7,6 +7,9 @@
           <option value="150">150</option>
           <option selected value="200">200</option>
           <option value="250">250</option>
+          <option value="300">300</option>
+          <option value="350">350</option>
+          <option value="400">400</option>
         </select> ml
       </div>
       <div v-for="(ing, index) in ingredients" :key="ing">
@@ -44,7 +47,8 @@
       </div>
     </div>
     <div class="buttons">
-      <button @click="sendCocktailReq()">MOCH MA MEI DRANGL HEAST!!!!!!</button>
+      <button @click="sendCocktailReq()">MOCH MA MEI DRANGL HEAST!!!!!!</button><br/>
+      <button @click="cancelCocktailReq()">HEA AUF I WÜ DES DRINGA NED!!!!!</button>
     </div>
   </div>
 </template>
@@ -62,11 +66,12 @@ export default {
       loaded: false,
       cocktails: null,
       selectedCocktail: null,
-      selectedSize: 200
+      selectedSize: 200,
+      serverAddr: "192.168.0.87"
     };
   },
   created: async function () {
-    let ingResponse = await fetch("http://192.168.0.129:8081/ingredients");
+    let ingResponse = await fetch("http://"+this.serverAddr+":8081/ingredients");
 
     if (ingResponse.ok) {
       this.ingredients = await ingResponse.json();
@@ -80,7 +85,7 @@ export default {
       return;
     }
 
-    let cocktailsResponse = await fetch("http://192.168.0.129:8081/cocktails");
+    let cocktailsResponse = await fetch("http://"+this.serverAddr+":8081/cocktails");
 
     if (cocktailsResponse.ok) {
       this.cocktails = await cocktailsResponse.json();
@@ -170,6 +175,7 @@ export default {
           newSum
       );
     },
+
     roundVals: function () {
       for (let i = 0; i < this.pumpvals.length; i++) {
         this.roundedPumpVals[i] = this.pumpvals[i].toFixed(0);
@@ -181,10 +187,12 @@ export default {
         this.pumpvals[index] = 0;
       }
     },
+
     passNewVal: function (index) {
       //pass new roundedVal to pumpvals, otherwise "normalizeVals()" doesnt work or new val in number input isnt updated
       this.pumpvals[index] = this.roundedPumpVals[index];
     },
+
     passCockVal: function (index) {
       let ctail = this.cocktails[index];
       let ctailIng = [];
@@ -216,20 +224,38 @@ export default {
       this.roundVals();
       this.selectedCocktail = index;
     },
+
     sendCocktailReq: function () {
-      let cockName = this.cocktails[this.selectedCocktail].name
-        .replace(/\s+/g, "")
-        .toLowerCase();
-      fetch("http://192.168.0.129:8081/cocktails/" + cockName, {
+      let cocktail = {
+        name:"custom",
+        ingredients: []
+      }
+
+      this.pumpvals.forEach((val, index) =>{
+        if(val > 0){
+          cocktail.ingredients.push({name: this.ingredients[index], amount: this.selectedSize*(val/100)})
+        }
+      })
+
+      fetch("http://"+this.serverAddr+":8081/cocktails/custom", {
         method: "post",
-      }).then((response) => {
-        console.log(response);
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cocktail)
       });
     },
+
     drinkSizeChanged: function($event){
       this.selectedSize = parseInt($event.target.options[$event.target.options.selectedIndex].text);
+    },
+
+    cancelCocktailReq: function(){
+      fetch("http://"+this.serverAddr+":8081/cocktails/standard/cancel", {
+        method: "post",
+      });
     }
-    //TODO normalize amount in with selectedSize
   },
 };
 </script>
