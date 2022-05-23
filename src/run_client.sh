@@ -6,7 +6,7 @@ reset="\e[0m"
 green="\e[0;92m"
 blue="\e[0;94m"
 
-echo -e "${blue}${bold}${uline}[Dionysus-Bartender]${reset}"
+echo -e "${blue}${bold}${uline}[Dionysus-Bartender | Run KivyMD client]${reset}"
 echo " "
 
 echo -e "${blue}${bold}${uline}[Phase 1 of 4]${reset}"
