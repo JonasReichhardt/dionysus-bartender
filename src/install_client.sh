@@ -6,7 +6,7 @@ reset="\e[0m"
 green="\e[0;92m"
 blue="\e[0;94m"
 
-echo -e "${blue}${bold}${uline}[Dionysus-Bartender]${reset}"
+echo -e "${blue}${bold}${uline}[Dionysus-Bartender | Install touchscreen application]${reset}"
 echo " "
 
 echo -e "${blue}${bold}${uline}[Phase 1 of 6]${reset}"
@@ -24,6 +24,17 @@ sudo apt install pkg-config libgl1-mesa-dev libgles2-mesa-dev \
 sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev -y
 echo " "
 
+echo "Set hostname and disable cursor? [Y,n]"
+read input
+if [[ $input == "Y" || $input == "y" ]]; then
+   echo -e "${blue}${bold}${uline}[Phase 6 of 6]${res et}"
+   echo -e "${green}${bold}[Setting up miscellaneous]${reset}"
+   echo -e "${green}Setting hostname...${reset}"
+   sudo hostnamectl set-hostname dionysus
+   echo -e "${green}Setting cursor settings...${reset}"
+   sudo sed -i.bkp '/\[Seat\:\*\]/a xserver-command = X -nocursor' /etc/lightdm/lightdm.conf
+   echo " "
+
 echo -e "${blue}${bold}${uline}[Phase 2 of 6]${reset}"
 echo -e "${green}${bold}[Setting up virtual environment]${reset}"
 echo -e "${green}Installing virtual environment...${reset}"
@@ -37,7 +48,6 @@ echo -e "${blue}${bold}${uline}[Phase 3 of 6]${reset}"
 echo -e "${green}${bold}[Installing KivyMD dependencies]${reset}"
 pip install Pillow
 pip install kivy
-pip install RPi.GPIO
 echo " "
 
 echo -e "${blue}${bold}${uline}[Phase 4 of 6]${reset}"
@@ -55,17 +65,6 @@ echo -e "${green}${bold}[Copying config]${reset}"
 sudo cp ../../config/kivy/config.ini ~/.kivy/config.ini 
 sudo cp ~/.kivy/config.ini /root/.kivy/config.ini
 echo " "
-
-echo "Set hostname and disable cursor? [Y,n]"
-read input
-if [[ $input == "Y" || $input == "y" ]]; then
-   echo -e "${blue}${bold}${uline}[Phase 6 of 6]${reset}"
-   echo -e "${green}${bold}[Setting up miscellaneous]${reset}"
-   echo -e "${green}Setting hostname...${reset}"
-   sudo hostnamectl set-hostname dionysus
-   echo -e "${green}Setting cursor settings...${reset}"
-   sudo sed -i.bkp '/\[Seat\:\*\]/a xserver-command = X -nocursor' /etc/lightdm/lightdm.conf
-   echo " "
    
 read -n 1 -s -r -p "Press any key to reboot"
 
