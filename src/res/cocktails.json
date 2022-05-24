@@ -2,11 +2,11 @@
   "cocktails": [
     {
       "name":"Moscow Mule",
-      "ingredients": {
-        "Vodka": 57,
-        "Ginger ale": 227,
-        "Lime juice": 57
-      },
+      "ingredients": [
+        {"name": "Vodka", "amount": 57},
+        {"name": "Ginger ale", "amount":227},
+        {"name": "Lime juice", "amount": 57}
+      ],
       "additional":[
         "Lime",
         "Crushed ice"
@@ -14,28 +14,28 @@
     },
     {
       "name":"Tequila Sunrise",
-      "ingredients": {
-        "Tequila": 28.5,
-        "Grenadine": 14.2,
-        "Orange juice": 114
-      }
+      "ingredients": [
+        {"name": "Tequila", "amount": 28.5},
+        {"name": "Grenadine", "amount": 14.2},
+        {"name": "Orange juice", "amount": 114}
+      ]
     },
     {
       "name":"Virgin Pina Colada",
-      "ingredients": {
-        "Pineapple juice": 114,
-        "Coconut cream": 114
-      }
+      "ingredients": [
+        {"name":"Pineapple juice","amount": 114},
+        {"name":"Coconut cream","amount": 114}
+      ]
     },
     {
       "name":"Long Island Tea",
-      "ingredients": {
-        "Vodka": 14,
-        "Light rum": 14,
-        "Gin": 14,
-        "Tequila": 14,
-        "Cola": 10
-      },
+      "ingredients": [
+        {"name": "Vodka", "amount": 14},
+        {"name": "Light rum", "amount": 14},
+        {"name":"Gin", "amount": 14},
+        {"name":"Tequila", "amount": 14},
+        {"name":"Cola","amount": 10}
+      ],
       "additional":[
         "Lemon",
         "Ice cubes"
@@ -43,11 +43,11 @@
     },
     {
       "name":"Negroni",
-      "ingredients": {
-        "Vodka": 28.5,
-        "Campari": 28.5,
-        "Sweet Vermouth": 28.5
-      }
+      "ingredients": [
+        {"name": "Vodka", "amount": 28.5},
+        {"name":"Campari", "amount": 28.5},
+        {"name": "Sweet Vermouth", "amount": 28.5}
+      ]
     }
   ]
 }
