@@ -3,8 +3,6 @@ from pathlib import Path
 from kivy.lang import Builder
 from kivy.uix.screenmanager import *
 from kivy.core.window import Window
-from kivymd.uix.button import MDRaisedButton
-from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 from kivymd.app import MDApp
@@ -12,8 +10,9 @@ from kivymd.uix.menu import MDDropdownMenu
 
 # setup screen depending on OS
 import platform
+import requests
+import json
 
-from src.kivymd.model.Cocktail import CocktailFactory
 from src.kivymd.model.Pump import PumpFactory
 from theming import colors
 
@@ -22,6 +21,8 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
     Window.fullscreen = 'auto'
 
 RES_PATH = Path("../res/")
+SERVER_IP = '192.168.56.1'
+SERVER_PORT = '8081'
 
 
 # welcome screen
@@ -33,10 +34,13 @@ class WelcomeScreen(MDScreen):
 
 # main screen
 class MainScreen(MDScreen):
+    ingredients = json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients').content)
+    raisedBtn = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        menu_items = self.getIngredients()
+        # initialize ingredient list by calling ingredient endpoint
+        menu_items = self.getMenuItems(self.getIngredients())
         self.menu = MDDropdownMenu(
             caller=self.ids.buttonLayout,
             items=menu_items,
@@ -47,42 +51,44 @@ class MainScreen(MDScreen):
         self.menu.bind()
 
     def getIngredients(self):
+        return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients').content)
+
+    def postIngredients(self, ing):
+        return requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients', json=ing)
+
+    def getMenuItems(self, ing):
         return [
             {
                 "viewclass": "OneLineListItem",
-                "text": f"Item {i}",
-                "on_release": lambda x=f"Item {i}": self.menu_callback(x),
-            } for i in range(8)
+                "text": ing[i],
+                "on_release": lambda x=i: self.setIngredient(ing[x], self.raisedBtn),
+            } for i in range(len(ing))
         ]
 
-    def menu_callback(self, text_item):
-        self.menu.dismiss()
+    def onRelease(self, btn):
+        self.raisedBtn = btn
+        self.menu.open()
 
-    def getIngredient(self):
-        return "Vodi"
+    def setIngredient(self, item, index):
+        self.ingredients[index] = item
+        # change btn text
+        self.ids['btn' + str(index)].text = item
+        # post newly configured ingredients to webserver
+        self.postIngredients(self.ingredients)
+        self.menu.dismiss()
 
 
 # class representation of swiper
 class CocktailScreen(MDScreen):
 
-    def on_enter(self):
+    def on_pre_enter(self):
+        for widget in self.ids.swiper.get_items():
+            self.ids.swiper.remove_widget(widget)
         for c in self.loadCocktails():
             self.ids.swiper.add_widget(CocktailItem(cocktail=c))
 
     def loadCocktails(self):
-        provider = CocktailFactory(str(RES_PATH / "cocktails.json"))
-        return provider.loadCocktails(self.loadIngredients())
-
-    def loadIngredients(self):
-        pumps = self.loadPumps()
-        ingredients = []
-        for pump in pumps:
-            ingredients.append(pump.ingredient)
-        return ingredients
-
-    def loadPumps(self):
-        provider = PumpFactory(str(RES_PATH / "pump-config.json"))
-        return provider.loadFromFile()
+        return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails').content)
 
 
 # normal cocktail
@@ -94,17 +100,14 @@ class CocktailItem(MDSwiperItem):
         super().__init__()
 
     def getIconPath(self):
-        path = RES_PATH / "img" / (self.cocktail.name.lower().replace(' ', '-') + ".png")
+        path = RES_PATH / "img" / (self.cocktail['name'].lower().replace(' ', '-') + ".png")
         if path.exists() and path.is_file():
             return str(path)
         else:
             return str(RES_PATH / "img" / "error.png")
 
     def getCocktailName(self):
-        return self.cocktail.name
-
-
-
+        return self.cocktail['name']
 
 
 class DionysusApp(MDApp):
@@ -122,7 +125,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "cocktail"
+        sm.current = "main"
 
         return sm
 

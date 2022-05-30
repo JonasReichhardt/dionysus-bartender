@@ -24,55 +24,81 @@
         padding: 0, -10
         spacing: 12,0
 
-        MDRaisedButton:
+        Button:
+            id: btn0
+            markup: True
+            text: root.ingredients[0]
+            on_release: root.onRelease(0)
+            width: root.width/2
+            height: root.height/3.2
+            font_size: 26
+            color: 0,0,0,1
+            size_hint: None, None
+            background_normal: ''
+            background_color: 145/255, 206/255, 224/255, 1
+
+
+        Button:
             id: btn1
-            text: root.getIngredient()
-            on_release: root.menu.open()
+            text: root.ingredients[1]
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.onRelease(1)
             width: root.width/2
             height: root.height/3.2
             font_size: 26
+            color: 0,0,0,1
+            size_hint: None, None
+            background_normal: ''
+            background_color: 145/255, 206/255, 224/255, 1
 
-        MDRaisedButton:
+        Button:
             id: btn2
-            text: "PRESS ME"
+            text: root.ingredients[2]
             pos_hint: {"center_x": .5, "center_y": .5}
-            on_release: root.menu.open()
+            on_release: root.onRelease(2)
             width: root.width/2
             height: root.height/3.2
             font_size: 26
+            color: 0,0,0,1
+            size_hint: None, None
+            background_normal: ''
+            background_color: 145/255, 206/255, 224/255, 1
 
-        MDRaisedButton:
+        Button:
             id: btn3
-            text: "PRESS ME"
+            text: root.ingredients[3]
             pos_hint: {"center_x": .5, "center_y": .5}
-            on_release: root.menu.open()
+            on_release: root.onRelease(3)
             width: root.width/2
             height: root.height/3.2
             font_size: 26
+            color: 0,0,0,1
+            size_hint: None, None
+            background_normal: ''
+            background_color: 145/255, 206/255, 224/255, 1
 
-        MDRaisedButton:
+        Button:
             id: btn4
-            text: "PRESS ME"
+            text: root.ingredients[4]
             pos_hint: {"center_x": .5, "center_y": .5}
-            on_release: root.menu.open()
+            on_release: root.onRelease(4)
             width: root.width/2
             height: root.height/3.2
             font_size: 26
+            color: 0,0,0,1
+            size_hint: None, None
+            background_normal: ''
+            background_color: 145/255, 206/255, 224/255, 1
 
-        MDRaisedButton:
+        Button:
             id: btn5
-            text: "PRESS ME"
+            text: root.ingredients[5]
             pos_hint: {"center_x": .5, "center_y": .5}
-            on_release: root.menu.open()
+            on_release: root.onRelease(5)
             width: root.width/2
             height: root.height/3.2
             font_size: 26
-
-        MDRaisedButton:
-            id: btn6
-            text: "PRESS ME"
-            pos_hint: {"center_x": .5, "center_y": .5}
-            on_release: root.menu.open()
-            width: root.width/2
-            height: root.height/3.2
-            font_size: 26
+            color: 0,0,0,1
+            size_hint: None, None
+            background_normal: ''
+            background_color: 145/255, 206/255, 224/255, 1

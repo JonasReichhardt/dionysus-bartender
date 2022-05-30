@@ -13,18 +13,6 @@
       ]
     },
     {
-      "name":"Moscow Mule 2",
-      "ingredients": {
-        "Vodka": 57,
-        "Ginger ale": 227,
-        "Lime juice": 57
-      },
-      "additional":[
-        "Lime",
-        "Crushed ice"
-      ]
-    },
-    {
       "name":"Tequila Sunrise",
       "ingredients": [
         {"name": "Tequila", "amount": 28.5},
