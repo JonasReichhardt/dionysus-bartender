@@ -45,7 +45,6 @@ class MainScreen(MDScreen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         # initialize ingredient list by calling ingredient endpoint
         menu_items = self.getMenuItems(self.getIngredients())
         self.menu = MDDropdownMenu(
@@ -56,6 +55,9 @@ class MainScreen(MDScreen):
             height=70
         )
         self.menu.bind()
+
+    def on_pre_enter(self):
+        self.ids['btnSave'].text = 'Save'
 
     def getIngredients(self):
         return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients').content)
