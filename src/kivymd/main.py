@@ -110,7 +110,7 @@ class CocktailItem(MDSwiperItem):
         return self.cocktail['name']
 
     def makeCocktail(self):
-        playsound(str(RES_PATH / 'TestSound.mp3'))
+        playsound(str(RES_PATH / 'TestSound.mp3'), block=False)
         name = str.lower(self.cocktail['name']).replace(" ", "")
         return requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails/standard/' + name)
 
