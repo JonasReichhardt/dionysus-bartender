@@ -139,6 +139,8 @@ async function main() {
 
 async function open_serial_port() {
     let portList = await SerialPort.list()
+    console.log(portList)
+    console.log(portList[0].path)
     if (portList != undefined && portList.length > 0) {
         return new SerialPort({ path: portList[0].path, baudRate: 115200 }, function (err) {
             if (err) {
