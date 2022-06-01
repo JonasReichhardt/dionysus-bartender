@@ -77,6 +77,11 @@ class MainScreen(MDScreen):
         self.postIngredients(self.ingredients)
         self.menu.dismiss()
 
+    def on_touch_up(self, touch):
+        print('The touch is at position', touch.pos)
+        if 'angle' in touch.profile:
+            print('The touch angle is', touch.a)
+
 
 # class representation of swiper
 class CocktailScreen(MDScreen):
@@ -89,6 +94,11 @@ class CocktailScreen(MDScreen):
 
     def loadCocktails(self):
         return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails').content)
+
+    def on_touch_up(self, touch):
+        print('The touch is at position', touch.pos)
+        if 'angle' in touch.profile:
+            print('The touch angle is', touch.a)
 
 
 # normal cocktail
