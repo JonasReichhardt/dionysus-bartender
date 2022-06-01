@@ -43,6 +43,7 @@
                 width: root.width
                 height: root.width/6
                 halign: "center"
+                on_release: root.makeCocktail()
                 canvas.before:
                     Color:
                         rgba: app.theme_cls.primary_color

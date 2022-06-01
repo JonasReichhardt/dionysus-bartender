@@ -53,6 +53,7 @@
 
 
 <script>
+import axios from 'axios';
 export default {
   name: "PumpConfiguration",
   data() {
@@ -63,10 +64,19 @@ export default {
         {text: 'OSaft', value: 'A'},
         {text: 'Vodka', value: 'B'},
         {text: 'Cola', value: 'C'}
-      ]
+      ],
+      serverAddr: "192.168.178.157"
+    }
+  },
+  methods: {
+    sendPost() {
+      axios.post("http://" + this.serverAddr + ":8081/ingredients", this.pumpConfig)
+          .then(res => {
+            console.log(res)
+          })
     }
   }
-}
+};
 </script>
 
 <style>

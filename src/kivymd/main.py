@@ -7,13 +7,13 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
+from playsound import playsound
 
 # setup screen depending on OS
 import platform
 import requests
 import json
 
-from src.kivymd.model.Pump import PumpFactory
 from theming import colors
 
 platformInfo = platform.uname()
@@ -109,6 +109,11 @@ class CocktailItem(MDSwiperItem):
     def getCocktailName(self):
         return self.cocktail['name']
 
+    def makeCocktail(self):
+        playsound(str(RES_PATH / 'TestSound.mp3'))
+        name = str.lower(self.cocktail['name']).replace(" ", "")
+        return requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails/standard/' + name)
+
 
 class DionysusApp(MDApp):
 
@@ -125,7 +130,7 @@ class DionysusApp(MDApp):
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
             sm.add_widget(screen)
-        sm.current = "main"
+        sm.current = "cocktail"
 
         return sm
 
