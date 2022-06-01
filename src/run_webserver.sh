@@ -23,18 +23,6 @@ echo -e "${green}Pulling latest changes...${reset}"
 git pull
 echo " "
 
-echo -e "${blue}${bold}${uline}[Phase 2 of 4]${reset}"
-echo -e "${green}${bold}[Building frontend application]${reset}"
-echo -e "${green}Installing dependencies...${reset}"
-cd webapp
-npm install
-echo -e "${green}Building application...${reset}"
-npm run build
-cd ..
-echo -e "${green}Copying artifacts into server directory...${reset}"
-sudo cp -r ./webapp/dist/. ./webserver/dist/
-echo " "
-
 echo -e "${blue}${bold}${uline}[Phase 3 of 4]${reset}"
 echo -e "${green}${bold}[Building webserver]${reset}"
 echo -e "${green}Installing dependencies...${reset}"
