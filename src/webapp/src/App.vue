@@ -1,10 +1,12 @@
 <template>
   <h1>Dionysus Bartender</h1>
+  <PumpConfiguration />
   <DionysusApp />
 </template>
 
 <script>
 import DionysusApp from './components/DionysusApp.vue'
+import PumpConfiguration from './components/PumpConfiguration.vue'
 
 export default {
   name: 'App',
@@ -13,7 +15,8 @@ export default {
     }
   },
   components: {
-    DionysusApp
+    DionysusApp,
+    PumpConfiguration
   }     
 }
 </script>
