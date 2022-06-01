@@ -138,11 +138,10 @@ async function main() {
 }
 
 async function open_serial_port() {
-    let portList = await SerialPort.list()
-    console.log(portList)
-    console.log(portList[0].path)
-    if (portList != undefined && portList.length > 0) {
-        return new SerialPort({ path: portList[0].path, baudRate: 115200 }, function (err) {
+    port = get_serial_port(await SerialPort.list())
+    if (port != undefined) {
+        console.log("INF| using serial port with path " + port.path)
+        return new SerialPort({ path: port.path, baudRate: 115200 }, function (err) {
             if (err) {
                 return console.error('ERR| could not open port |', err.message)
             }
@@ -150,6 +149,14 @@ async function open_serial_port() {
     } else {
         console.error("ERR| no serial port found")
         serialEnabled = false
+    }
+}
+
+function get_serial_port(portList){
+    for(let i=0; i<portList.length; i++){
+        if(portList[i].path != undefined && portList[i].serialNumber != undefined && portList[i].serialNumber != ""){
+            return portList[i]
+        }
     }
 }
 
