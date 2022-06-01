@@ -17,7 +17,7 @@
         id: buttonLayout
         cols: 2
         col_default_width: self.width/2
-        row_default_height: self.height/3
+        row_default_height: self.height/4
         padding: 0, -10
         spacing: 12,0
 
@@ -27,7 +27,7 @@
             text: root.ingredients[0]
             on_release: root.onRelease(0)
             width: root.width/2
-            height: root.height/3.2
+            height: root.height/4.2
             font_size: 26
             color: 0,0,0,1
             size_hint: None, None
@@ -41,7 +41,7 @@
             pos_hint: {"center_x": .5, "center_y": .5}
             on_release: root.onRelease(1)
             width: root.width/2
-            height: root.height/3.2
+            height: root.height/4.2
             font_size: 26
             color: 0,0,0,1
             size_hint: None, None
@@ -54,7 +54,7 @@
             pos_hint: {"center_x": .5, "center_y": .5}
             on_release: root.onRelease(2)
             width: root.width/2
-            height: root.height/3.2
+            height: root.height/4.2
             font_size: 26
             color: 0,0,0,1
             size_hint: None, None
@@ -67,7 +67,7 @@
             pos_hint: {"center_x": .5, "center_y": .5}
             on_release: root.onRelease(3)
             width: root.width/2
-            height: root.height/3.2
+            height: root.height/4.2
             font_size: 26
             color: 0,0,0,1
             size_hint: None, None
@@ -80,7 +80,7 @@
             pos_hint: {"center_x": .5, "center_y": .5}
             on_release: root.onRelease(4)
             width: root.width/2
-            height: root.height/3.2
+            height: root.height/4.2
             font_size: 26
             color: 0,0,0,1
             size_hint: None, None
@@ -93,9 +93,35 @@
             pos_hint: {"center_x": .5, "center_y": .5}
             on_release: root.onRelease(5)
             width: root.width/2
-            height: root.height/3.2
+            height: root.height/4.2
             font_size: 26
             color: 0,0,0,1
             size_hint: None, None
             background_normal: ''
             background_color: 145/255, 206/255, 224/255, 1
+
+        Button:
+            id: btnSave
+            text: root.ingredientsSavedMsg
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.postIngredients()
+            width: root.width/2
+            height: root.height/4.2
+            font_size: 26
+            color: 1, 1, 1, 1
+            size_hint: None, None
+            background_normal: ''
+            background_color: .2, .7, 0, .6
+
+        Button:
+            id: btnReturn
+            text: "Return"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            on_release: root.returnToCocktailView()
+            width: root.width/2
+            height: root.height/4.2
+            font_size: 26
+            color: 1, 1, 1, 1
+            size_hint: None, None
+            background_normal: ''
+            background_color: .7, .2, 0, .6

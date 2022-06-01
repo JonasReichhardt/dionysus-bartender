@@ -1,8 +1,10 @@
 from pathlib import Path
 
+from kivy.graphics import Rectangle
 from kivy.lang import Builder
 from kivy.uix.screenmanager import *
 from kivy.core.window import Window
+from kivymd.uix.fitimage import FitImage
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.swiper import MDSwiperItem
 from kivymd.app import MDApp
@@ -24,6 +26,8 @@ RES_PATH = Path("../res/")
 SERVER_IP = '192.168.56.1'
 SERVER_PORT = '8081'
 
+sm = ScreenManager(transition=FadeTransition(duration=0.5))
+
 
 # welcome screen
 class WelcomeScreen(MDScreen):
@@ -36,9 +40,12 @@ class WelcomeScreen(MDScreen):
 class MainScreen(MDScreen):
     ingredients = json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients').content)
     raisedBtn = None
+    initial = 0
+    ingredientsSavedMsg = 'Save'
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
         # initialize ingredient list by calling ingredient endpoint
         menu_items = self.getMenuItems(self.getIngredients())
         self.menu = MDDropdownMenu(
@@ -53,8 +60,9 @@ class MainScreen(MDScreen):
     def getIngredients(self):
         return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients').content)
 
-    def postIngredients(self, ing):
-        return requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients', json=ing)
+    def postIngredients(self):
+        requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients', json=self.ingredients)
+        self.ids['btnSave'].text = 'Config saved!'
 
     def getMenuItems(self, ing):
         return [
@@ -73,18 +81,24 @@ class MainScreen(MDScreen):
         self.ingredients[index] = item
         # change btn text
         self.ids['btn' + str(index)].text = item
-        # post newly configured ingredients to webserver
-        self.postIngredients(self.ingredients)
         self.menu.dismiss()
 
-    def on_touch_up(self, touch):
-        print('The touch is at position', touch.pos)
-        if 'angle' in touch.profile:
-            print('The touch angle is', touch.a)
+    def returnToCocktailView(self):
+        sm.transition.direction = 'up'
+        sm.current = 'cocktail'
+
+
+class CocktailImage(FitImage):
+    initial = 0
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 
 # class representation of swiper
 class CocktailScreen(MDScreen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def on_pre_enter(self):
         for widget in self.ids.swiper.get_items():
@@ -94,11 +108,6 @@ class CocktailScreen(MDScreen):
 
     def loadCocktails(self):
         return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails').content)
-
-    def on_touch_up(self, touch):
-        print('The touch is at position', touch.pos)
-        if 'angle' in touch.profile:
-            print('The touch angle is', touch.a)
 
 
 # normal cocktail
@@ -120,9 +129,19 @@ class CocktailItem(MDSwiperItem):
         return self.cocktail['name']
 
     def makeCocktail(self):
-        playsound(str(RES_PATH / 'TestSound.mp3'))
         name = str.lower(self.cocktail['name']).replace(" ", "")
-        return requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails/standard/' + name)
+        requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails/standard/' + name)
+        playsound(str(RES_PATH / 'TestSound.mp3'), block=False)
+
+    def on_touch_down(self, touch):
+        self.initial = touch.y
+
+    def on_touch_up(self, touch):
+        if self.ids.btn.collide_point(*touch.pos):
+            self.makeCocktail()
+        if self.initial - touch.y > 50:
+            sm.transition.direction = 'down'
+            sm.current = 'main'
 
 
 class DionysusApp(MDApp):
@@ -135,7 +154,6 @@ class DionysusApp(MDApp):
         kv = Builder.load_file("View/CocktailScreen.kv")
         kv = Builder.load_file("View/WelcomeScreen.kv")
         kv = Builder.load_file("View/MainScreen.kv")
-        sm = ScreenManager(transition=FadeTransition(duration=0.5))
         # register all pages
         screens = [WelcomeScreen(name="welcome"), MainScreen(name="main"), CocktailScreen(name='cocktail')]
         for screen in screens:
