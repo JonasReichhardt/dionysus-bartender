@@ -111,6 +111,10 @@ class CocktailScreen(MDScreen):
     def loadCocktails(self):
         return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails').content)
 
+    def switchToMain(self):
+        sm.transition.direction = 'down'
+        sm.current = 'main'
+
 
 # normal cocktail
 class CocktailItem(MDSwiperItem):
@@ -134,16 +138,6 @@ class CocktailItem(MDSwiperItem):
         name = str.lower(self.cocktail['name']).replace(" ", "")
         requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/cocktails/standard/' + name)
         playsound(str(RES_PATH / 'TestSound.mp3'), block=False)
-
-    def on_touch_down(self, touch):
-        self.initial = touch.y
-
-    def on_touch_up(self, touch):
-        if self.ids.btn.collide_point(*touch.pos):
-            self.makeCocktail()
-        if self.initial - touch.y > 50:
-            sm.transition.direction = 'down'
-            sm.current = 'main'
 
 
 class DionysusApp(MDApp):

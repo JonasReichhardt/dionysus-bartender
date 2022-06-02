@@ -3,16 +3,21 @@
 <CocktailScreen>:
     canvas.before:
         Color:
-            rgba: 0, 0, 0, .5
-        Rectangle:
-            size: root.width, 10
-            pos: 0, root.height - 10
-        Color:
             rgba: 0, 0, 0, .1
         Rectangle:
             size: self.size
             pos: self.pos
     name: "cocktail"
+
+    Button:
+        id: switchBtn
+        width: root.width
+        height: dp(10)
+        on_press: root.switchToMain()
+        x: 0
+        y: root.height - dp(15)
+        background_normal: ''
+        background_color: 0, 0, 0, .5
 
     MDSwiper:
         id: swiper
