@@ -23,7 +23,7 @@ if platformInfo.system == 'Linux' and platformInfo.machine.find('64') == -1:
     Window.fullscreen = 'auto'
 
 RES_PATH = Path("../res/")
-SERVER_IP = '192.168.56.1'
+SERVER_IP = '192.168.178.250'
 SERVER_PORT = '8081'
 
 sm = ScreenManager(transition=FadeTransition(duration=0.5))

@@ -67,7 +67,7 @@ export default {
       cocktails: null,
       selectedCocktail: null,
       selectedSize: 200,
-      serverAddr: "192.168.250.74"
+      serverAddr: "192.168.178.250"
     };
   },
   created: async function () {
