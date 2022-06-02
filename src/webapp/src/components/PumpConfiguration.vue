@@ -53,7 +53,6 @@
 
 
 <script>
-import axios from 'axios';
 export default {
   name: "PumpConfiguration",
   data() {
@@ -70,7 +69,7 @@ export default {
   },
   methods: {
     sendPost() {
-      axios.post("http://" + this.serverAddr + ":8081/ingredients", this.pumpConfig)
+      fetch.post("http://" + this.serverAddr + ":8081/ingredients", this.pumpConfig)
           .then(res => {
             console.log(res)
           })
