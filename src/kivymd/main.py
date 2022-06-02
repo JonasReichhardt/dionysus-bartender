@@ -60,7 +60,7 @@ class MainScreen(MDScreen):
         self.ids['btnSave'].text = 'Save'
 
     def getIngredients(self):
-        return json.loads(requests.get('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients').content)
+        return json.load(open(str(RES_PATH / 'ingredients.json')))
 
     def postIngredients(self):
         requests.post('http://' + SERVER_IP + ':' + SERVER_PORT + '/ingredients', json=self.ingredients)
