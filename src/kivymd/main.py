@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from kivy.graphics import Rectangle
 from kivy.lang import Builder
 from kivy.uix.screenmanager import *
 from kivy.core.window import Window
