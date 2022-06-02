@@ -39,8 +39,8 @@ async function main() {
             amounts.push(ing.amount)
         });
 
-        if(amounts.reduce((a, b) => a + b)>500){
-            res.status(409).send('cocktail cannot be bigger than 500ml')
+        if(amounts.reduce((a, b) => a + b)>400){
+            res.status(409).send('cocktail cannot be bigger than 400ml')
             return
         }
 
