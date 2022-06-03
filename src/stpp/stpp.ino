@@ -1,9 +1,19 @@
-#define pin1 22
-#define pin2 23
-#define pin3 24
-#define pin4 25
-#define pin5 26
-#define pin6 27
+#define pin1 49
+#define pin2 53
+#define pin3 44
+#define pin4 42
+#define pin5 48
+#define pin6 52
+
+#define pin1r 47
+#define pin2r 51
+#define pin3r 45
+#define pin4r 43
+#define pin5r 46
+#define pin6r 50
+
+#define weightPin 22
+#define weightSck 23
 
 // preprocessor options
 #define DEBUG_UPDATE_PINS false
@@ -11,9 +21,13 @@
 #define PRINT_READY_MSG true
 #define DEBUG_RESET false
 
+#define PUMP_DELAY 3000
+#define NUM_OF_PUMPS 6
+
 unsigned long endTimes[6];
 bool setFlags[] = {false,false,false,false,false,false};
 int pins[] = {pin1,pin2,pin3,pin4,pin5,pin6};
+int rPins[] = {pin1r,pin2r,pin3r,pin4r,pin5r,pin6r};
 
 void setup() {
   Serial.begin(115200);
@@ -40,7 +54,7 @@ void update_pins(){
         #if DEBUG_UPDATE_PINS
           Serial.print(i,DEC);
           Serial.println(":LOW");
-    	  #endif
+        #endif
         setFlags[i] = false;
         digitalWrite(pins[i],LOW);
       }
@@ -54,11 +68,15 @@ void check_for_input(){
     reset();
     Serial.read();
     return;
+  } else if(Serial.peek() == 'e') {
+    Serial.read();
+    emptyTubes();
+    return;
   }
 
   // check for new input
   if (Serial.available() > 10) {
-    for(int i=0; i<6; i=i+1){
+    for(int i=0; i < NUM_OF_PUMPS; i=i+1){
       long data = Serial.parseInt();
       
       if(data > 0 && !setFlags[i]){
@@ -75,6 +93,21 @@ void check_for_input(){
     }
     // remove last byte from buffer
     Serial.read();
+  }
+}
+
+void emptyTubes() {
+  // start clearing the tubes
+  for (int i = 0; i < NUM_OF_PUMPS; i++) {
+    digitalWrite(rPins[i], HIGH);
+  }
+
+  // wait for 3 seconds
+  delay(PUMP_DELAY);
+
+  // stop rotating the pumps
+  for (int i = 0; i < NUM_OF_PUMPS; i++) {
+    digitalWrite(rPins[i], LOW);
   }
 }
 
