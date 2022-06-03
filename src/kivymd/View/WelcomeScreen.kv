@@ -1,0 +1,15 @@
+# Welcome Screen
+
+<WelcomeScreen>:
+    # Set screen name
+    name: "welcome"
+    # Add box layout
+    MDBoxLayout:
+        padding: "10dp"
+        # Add label
+        MDRectangleFlatButton:
+            text: 'Profile'
+            font_style:'H6'
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            on_press: root.manager.current = 'main'
+        

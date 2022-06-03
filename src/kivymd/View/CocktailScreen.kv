@@ -1,0 +1,50 @@
+# cocktail screen
+
+<CocktailScreen>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    name: "cocktail"
+
+    Button:
+        id: switchBtn
+        width: root.width
+        height: dp(10)
+        on_press: root.switchToMain()
+        x: 0
+        y: root.height - dp(15)
+        background_normal: ''
+        background_color: 0, 0, 0, .5
+
+    MDSwiper:
+        id: swiper
+        size_hint_y: None
+        height: root.height - dp(50)
+        y: root.height - self.height - dp(30)
+
+<CocktailItem>:
+    RelativeLayout:
+        CocktailImage:
+            source: root.getIconPath()
+
+        MDBoxLayout:
+            adaptive_height: False
+
+            MDRaisedButton:
+                id: btn
+                text: root.getCocktailName()
+                font_style: "H5"
+                width: root.width
+                height: root.width/6
+                halign: "center"
+                on_press: root.makeCocktail()
+                canvas.before:
+                    Color:
+                        rgba: app.theme_cls.primary_color
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [0,0,0,0]

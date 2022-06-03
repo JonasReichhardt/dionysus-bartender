@@ -1,6 +1,75 @@
 {
   "cocktails": [
     {
+      "name":"Gin Tonic",
+      "ingredients": [
+        {"name": "Gin", "amount": 40},
+        {"name": "Tonic water", "amount":100}
+      ]
+    },
+    {
+      "name":"Vodka Lemon",
+      "ingredients": [
+        {"name": "Vodka", "amount": 50},
+        {"name": "Ice tea", "amount":70}
+      ]
+    },
+    {
+      "name":"Arizona Stinger",
+      "ingredients": [
+        {"name": "Vodka", "amount": 40},
+        {"name": "Ice tea", "amount":160}
+      ]
+    },
+    {
+      "name":"Screwdriver",
+      "ingredients": [
+        {"name": "Vodka", "amount": 60},
+        {"name": "Tonic Water", "amount":150}
+      ]
+    },
+    {
+      "name":"Vodka Tonic",
+      "ingredients": [
+        {"name": "Vodka", "amount": 60},
+        {"name": "Tonic Water", "amount":150}
+      ]
+    },  
+    {
+      "name":"Gin Sour",
+      "ingredients": [
+        {"name": "Gin", "amount": 60},
+        {"name": "Lemon juice", "amount":30}
+      ],
+      "additional":[
+        "Sugar",
+        "Orange"
+      ]
+    },
+    {
+      "name":"Ice Pick",
+      "ingredients": [
+        {"name": "Vodka", "amount": 45},
+        {"name": "Ice tea", "amount":180},
+        {"name": "Lemon juice", "amount":10}
+      ],
+      "additional":[
+        "Crushed ice"
+      ]
+    },
+    {
+      "name":"AT&T",
+      "ingredients": [
+        {"name": "Vodka", "amount": 30},
+        {"name": "Gin", "amount":30},
+        {"name": "Tonic water", "amount": 120}
+      ],
+      "additional":[
+        "Lemon",
+        "Crushed ice"
+      ]
+    },
+    {
       "name":"Moscow Mule",
       "ingredients": [
         {"name": "Vodka", "amount": 57},

@@ -34,6 +34,7 @@ if [[ $input == "Y" || $input == "y" ]]; then
    echo -e "${green}Setting cursor settings...${reset}"
    sudo sed -i.bkp '/\[Seat\:\*\]/a xserver-command = X -nocursor' /etc/lightdm/lightdm.conf
    echo " "
+fi
 
 echo -e "${blue}${bold}${uline}[Phase 2 of 6]${reset}"
 echo -e "${green}${bold}[Setting up virtual environment]${reset}"

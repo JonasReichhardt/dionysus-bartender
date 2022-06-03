@@ -11,7 +11,7 @@ async function main() {
     var settings = load_app_settings()
     var pumps = load_pumps()
     var ingredients = extract_ingredients(pumps)
-    var cocktails = load_cocktails(pumps)
+    var cocktails = load_cocktails(ingredients)
 
     if (cocktails == undefined || pumps == undefined) {
         console.error("ERR| could not load config")
@@ -39,8 +39,8 @@ async function main() {
             amounts.push(ing.amount)
         });
 
-        if(amounts.reduce((a, b) => a + b)>500){
-            res.status(409).send('cocktail cannot be bigger than 500ml')
+        if(amounts.reduce((a, b) => a + b)>400){
+            res.status(409).send('cocktail cannot be bigger than 400ml')
             return
         }
 
@@ -116,8 +116,7 @@ async function main() {
     app.post('/ingredients', (req, res) => {
         ingList = req.body
 
-        ingredients = ingList
-        cocktails = sanitize_cocktails(cocktails, ingredients)
+        cocktails = update_ingredients(pumps,ingList)
 
         res.status(201).send(cocktails.length + " cocktails can be made")
     })
@@ -137,10 +136,24 @@ async function main() {
     })
 }
 
+function update_ingredients(pumps,ingList){
+    for(let i=0; i<pumps.length;i++){
+        if(ingList[i] != undefined){
+            pumps[i].ingredient = ingList[i]
+        }
+    }
+
+    // update ingredient list
+    ingredients = extract_ingredients(pumps)
+
+    return load_cocktails(ingList)
+}
+
 async function open_serial_port() {
-    let portList = await SerialPort.list()
-    if (portList != undefined && portList.length > 0) {
-        return new SerialPort({ path: portList[0].path, baudRate: 115200 }, function (err) {
+    port = get_serial_port(await SerialPort.list())
+    if (port != undefined) {
+        console.log("INF| using serial port with path " + port.path)
+        return new SerialPort({ path: port.path, baudRate: 115200 }, function (err) {
             if (err) {
                 return console.error('ERR| could not open port |', err.message)
             }
@@ -148,6 +161,14 @@ async function open_serial_port() {
     } else {
         console.error("ERR| no serial port found")
         serialEnabled = false
+    }
+}
+
+function get_serial_port(portList){
+    for(let i=0; i<portList.length; i++){
+        if(portList[i].path != undefined && portList[i].serialNumber != undefined && portList[i].serialNumber != ""){
+            return portList[i]
+        }
     }
 }
 
@@ -160,18 +181,11 @@ function load_app_settings() {
     }
 }
 
-function load_cocktails(pumps) {
+function load_cocktails(ingredients) {
     try {
-        ingredients = []
-
-        pumps.forEach(p => {
-            ingredients.push(p.ingredient)
-        });
-
         let cocktails = JSON.parse(fs.readFileSync('../res/cocktails.json', 'utf8')).cocktails
 
         return sanitize_cocktails(cocktails, ingredients)
-
     } catch (err) {
         console.error("ERR| could not load cocktail config")
         console.error(err)

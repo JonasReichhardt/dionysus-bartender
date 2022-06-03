@@ -1,28 +1,28 @@
 {
     "pumps":[
         {
-            "ingredient": "Vodka",
-            "flowrate": 10
-        },
-        {
-            "ingredient": "Ginger ale",
-            "flowrate": 10
-        },
-        {
-            "ingredient": "Lime juice",
-            "flowrate": 10
-        },
-        {
-            "ingredient": "Tequila",
-            "flowrate": 10
-        },
-        {
-            "ingredient": "Grenadine",
-            "flowrate": 10
+            "ingredient": "Tonic water",
+            "flowrate": 8
         },
         {
             "ingredient": "Orange juice",
             "flowrate": 10
+        },
+        {
+            "ingredient": "Ice tea",
+            "flowrate": 10.5
+        },
+        {
+            "ingredient": "Lemon juice",
+            "flowrate": 14.2
+        },
+        {
+            "ingredient": "Gin",
+            "flowrate": 10
+        },
+        {
+            "ingredient": "Vodka",
+            "flowrate": 12
         }
     ]
 }
