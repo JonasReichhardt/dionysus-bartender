@@ -47,9 +47,8 @@
 #dtparam=i2s=on
 #dtparam=spi=on
 
-# Uncomment this to enable infrared communication.
-#dtoverlay=gpio-ir,gpio_pin=17
-#dtoverlay=gpio-ir-tx,gpio_pin=18
+# Enable one-wire bus over gpio
+dtoverlay=w1-gpio
 
 # Additional overlays and parameters are documented /boot/overlays/README
 
@@ -78,6 +77,3 @@ speed=50000,keep_vref_on=0,swapxy=0,pmax=255,xohms=150,xmin=200,xmax=3900,
 ymin=200,ymax=3900
 display_rotate=0
 #end elecrow setup
-
-# Set GPIO
-gpio=0-27=op,dl
