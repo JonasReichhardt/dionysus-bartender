@@ -50,6 +50,7 @@ void setup() {
 }
 
 void loop() {
+  delay(10);
   LoadCell.update();
   update_pins();
   check_for_input();
@@ -96,29 +97,31 @@ void check_for_input(){
   }
   
   // check for new input
-  if (Serial.available() > 10 && weightThresholdExceeded()) {
-    for(int i=0; i < NUM_OF_PUMPS; i=i+1){
-      long data = Serial.parseInt();
-      
-      if(data > 0 && !setFlags[i]){
-        setFlags[i] = true;
-        endTimes[i] = millis()+data;
-        digitalWrite(pins[i],HIGH);
+  if (Serial.available() > 10) {
+    if (weightThresholdExceeded()) {
+      for(int i=0; i < NUM_OF_PUMPS; i=i+1){
+        long data = Serial.parseInt();
         
-        #if DEBUG_CHECK_INPUT
-            Serial.print(i,DEC);
-            Serial.print(":");
-            Serial.println(data,DEC);
-        #endif
+        if(data > 0 && !setFlags[i]){
+          setFlags[i] = true;
+          endTimes[i] = millis()+data;
+          digitalWrite(pins[i],HIGH);
+          
+          #if DEBUG_CHECK_INPUT
+              Serial.print(i,DEC);
+              Serial.print(":");
+              Serial.println(data,DEC);
+          #endif
+        }
       }
+      // remove last byte from buffer
+      Serial.read();
+    } else {
+      serialFlush();
+      #if DEBUG_WEIGHT
+        Serial.println("Serial data flushed");
+      #endif
     }
-    // remove last byte from buffer
-    Serial.read();
-  } else if(Serial.available() > 10 && !weightThresholdExceeded()) {
-    serialFlush();
-    #if DEBUG_WEIGHT
-      Serial.println("Serial data flushed");
-    #endif
   }
 }
 
