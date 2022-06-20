@@ -28,7 +28,7 @@
 #define WEIGHT_THRESHOLD 100.0
 
 HX711_ADC LoadCell(22, 23);
-unsigned long endTimes[6];
+unsigned long endTimes[NUM_OF_PUMPS];
 bool setFlags[] = {false,false,false,false,false,false};
 int pins[] = {pin1,pin2,pin3,pin4,pin5,pin6};
 int rPins[] = {pin1r,pin2r,pin3r,pin4r,pin5r,pin6r};
@@ -38,7 +38,7 @@ void setup() {
   LoadCell.begin();
   LoadCell.setCalFactor(CAL_FACTOR);
   LoadCell.start(2000);
-  for (int i = 0; i < 6; i = i + 1) {
+  for (int i = 0; i < NUM_OF_PUMPS; i = i + 1) {
     pinMode(pins[i], OUTPUT);
     pinMode(rPins[i], OUTPUT);
   }
@@ -60,7 +60,7 @@ void loop() {
 }
 
 void update_pins(){
-  for (int i = 0; i < 6; i = i + 1) {
+  for (int i = 0; i < NUM_OF_PUMPS; i = i + 1) {
     if(setFlags[i]){
       if(millis() >= endTimes[i] || !weightThresholdExceeded()){
         setFlags[i] = false;
@@ -154,7 +154,7 @@ void emptyTubes() {
 }
 
 void reset(){
-  for(int i=0; i<6; i=i+1){
+  for(int i = 0; i < NUM_OF_PUMPS; i++){
     digitalWrite(pins[i],LOW);
     setFlags[i] = false;
   }
