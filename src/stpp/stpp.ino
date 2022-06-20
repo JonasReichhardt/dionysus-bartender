@@ -15,11 +15,11 @@
 #define pin6r 50
 
 // preprocessor options
-#define DEBUG_UPDATE_PINS false
-#define DEBUG_CHECK_INPUT false
+#define DEBUG_UPDATE_PINS true
+#define DEBUG_CHECK_INPUT true
 #define PRINT_READY_MSG true
-#define DEBUG_RESET false
-#define DEBUG_WEIGHT false
+#define DEBUG_RESET true
+#define DEBUG_WEIGHT true
 
 #define PUMP_DELAY 3000
 #define NUM_OF_PUMPS 6
@@ -40,17 +40,20 @@ void setup() {
   LoadCell.start(2000);
   for (int i = 0; i < 6; i = i + 1) {
     pinMode(pins[i], OUTPUT);
+    pinMode(rPins[i], OUTPUT);
   }
+  
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB
   }
+  
   #if PRINT_READY_MSG
     Serial.println("RDY");
   #endif
 }
 
 void loop() {
-  delay(10);
+  delay(10); // delay needed for weight sensor
   LoadCell.update();
   update_pins();
   check_for_input();
@@ -60,12 +63,13 @@ void update_pins(){
   for (int i = 0; i < 6; i = i + 1) {
     if(setFlags[i]){
       if(millis() >= endTimes[i] || !weightThresholdExceeded()){
+        setFlags[i] = false;
+        digitalWrite(pins[i],LOW);
+        
         #if DEBUG_UPDATE_PINS
           Serial.print(i,DEC);
           Serial.println(":LOW");
         #endif
-        setFlags[i] = false;
-        digitalWrite(pins[i],LOW);
       }
     }
   }
@@ -74,6 +78,7 @@ void update_pins(){
 bool weightThresholdExceeded() {
   // load current weight on scale
   float i = LoadCell.getData();
+  
   #if DEBUG_WEIGHT
     Serial.print("Load_cell output val: ");
     Serial.println(i);
@@ -89,15 +94,15 @@ void check_for_input(){
     reset();
     Serial.read();
     return;
-  } else if(Serial.peek() == 'e') {
-    Serial.print('e');
-    Serial.read();
+  } else if(Serial.peek() == 'r') {
     emptyTubes();
+    Serial.read();
     return;
   }
   
   // check for new input
   if (Serial.available() > 10) {
+    // only start pumps if weight is on sensor (i.e. glas is beneath hose pipes)
     if (weightThresholdExceeded()) {
       for(int i=0; i < NUM_OF_PUMPS; i=i+1){
         long data = Serial.parseInt();
@@ -118,6 +123,7 @@ void check_for_input(){
       Serial.read();
     } else {
       serialFlush();
+      
       #if DEBUG_WEIGHT
         Serial.println("Serial data flushed");
       #endif
@@ -126,6 +132,7 @@ void check_for_input(){
 }
 
 void serialFlush(){
+  // empty serial data
   while(Serial.available() > 0) {
     char t = Serial.read();
   }
@@ -151,6 +158,7 @@ void reset(){
     digitalWrite(pins[i],LOW);
     setFlags[i] = false;
   }
+  
   #if DEBUG_RESET
     Serial.println("RESET");
   #endif
