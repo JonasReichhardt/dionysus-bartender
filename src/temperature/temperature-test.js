@@ -1,8 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 
-//const base_dir = "/sys/bus/w1/devices/"
-const base_dir = "C:\\Users\\jre\\Documents\\Uni"
+const base_dir = "/sys/bus/w1/devices/"
 const filename = "w1_slave"
 
 const isTempsensor = fileName => {
