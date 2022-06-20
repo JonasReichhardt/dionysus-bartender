@@ -15,11 +15,11 @@
 #define pin6r 50
 
 // preprocessor options
-#define DEBUG_UPDATE_PINS true
-#define DEBUG_CHECK_INPUT true
-#define PRINT_READY_MSG true
-#define DEBUG_RESET true
-#define DEBUG_WEIGHT true
+#define DEBUG_UPDATE_PINS false
+#define DEBUG_CHECK_INPUT false
+#define PRINT_READY_MSG false
+#define DEBUG_RESET false
+#define DEBUG_WEIGHT false
 
 #define PUMP_DELAY 3000
 #define NUM_OF_PUMPS 6
