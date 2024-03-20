@@ -1,4 +1,4 @@
-![logo](/home/nomad/Repositories/dionysus-bartender/logo.png)
+![logo](./logo.png)
 
 # Dionysus Bartender
 
